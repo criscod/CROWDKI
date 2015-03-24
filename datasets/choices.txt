@@ -1,0 +1,4 @@
+D1	D2	uri1	labeluri1	predicate	labelpredicate	uri2	labeluri2
+cars	persons	http://example.org/cars#Car	Car	http://ontoexample.org/onto1#wasDesignedBy	wasDesignedBy	http://example.org/persons#Person	Person
+cars	persons	http://example.org/cars#Car	Car	http://ontoexample.org/onto1#wasDrivenBy	wasDrivenBy	http://example.org/persons#Person	Person
+cars	persons	http://example.org/cars#Car	Car	http://ontoexample.org/onto1#wasRecommendedBy	wasRecommendedBy	http://example.org/persons#Person	Person

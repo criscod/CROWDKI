@@ -1,0 +1,46 @@
+<table border="0">
+<tr>
+<td> <b> Object A: {{a}} </b> </td>
+<td> <div style="width:20px"> </div> </td>
+<td> <b> Object B: {{b}} </b> </td>
+</tr>
+{% if definitiona != 'not available' or definitionb != 'not available' %} 
+<tr>
+{% endif %}
+{% if definitiona != 'not available' or definitionb != 'not available' %} 
+<td> 
+{% endif %}{% if definitiona != 'not available' %} <p><em>Definition (English)</em>: 
+{{definitiona}}</p> {% endif %} {% if definitiona != 'not available' or definitionb != 'not available' %} 
+</td> {% endif %}
+{% if definitiona != 'not available' or definitionb != 'not available' %} 
+<td> <div style="width:20px"> </div> </td>
+{% endif %}
+{% if definitiona != 'not available' or definitionb != 'not available' %} 
+<td> 
+{% endif %}{% if definitionb != 'not available' %} <p><em>Definition (English)</em>: 
+{{definitionb}}</p> {% endif %} {% if definitiona != 'not available' or definitionb != 'not available' %} 
+</td>{% endif %}
+{% if definitiona != 'not available' or definitionb != 'not available' %} 
+</tr>
+{% endif %}
+
+</table>
+
+
+
+
+
+<cml:radios label="{{validationradiolabel}}" name="main" class="" instructions="Please select only one of the answers" aggregation="agg" validates="required" gold="true">
+   <cml:radio label="yes"></cml:radio>
+    <cml:radio label="no"></cml:radio>
+  </cml:radios>
+
+  <cml:ratings class="" from="Completely unsure" to="Completely sure" label="Select how confident you feel when answering the previous question related to the relationship between the two described object" points="10" validates="required" instructions="Please select only one of the following options"/>
+  
+<cml:radios label="Select the name of Object A" name="verifword" class="" instructions="Please select only one of the answers" aggregation="agg" validates="required" gold="true">
+    <cml:radio label="{{a}} "></cml:radio>
+    <cml:radio label="{{b}}  "></cml:radio>
+  </cml:radios>
+
+<cml:text label="How many distinct words are in the name of Object A?" name="verifnumber" class="" aggregation="agg" validates="required positiveInteger" instructions="Please write the number in the text box" id="" gold="true"></cml:text>
+

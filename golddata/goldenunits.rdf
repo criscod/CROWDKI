@@ -1,0 +1,13 @@
+golden.g1 =labela,FC Bayern Stadium;la<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:j.0="http://xmlns.com/foaf/0.1/" > 
+  <rdf:Description rdf:about="http://www.gesis.org/data/publication58">
+    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Document"/>
+	<rdfs:label>lolailo</rdfs:label>
+	<rdfs:comment>blablabla lolailo </rdfs:comment>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.gesis.org/data/publication107">
+    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Document"/>
+  </rdf:Description>
+</rdf:RDF>
