@@ -1,0 +1,21 @@
+<h3><strong>Overview</strong></h3>  <p>Information integration is a process that aims to connect information of two different information sources, often published by different people and in different physical locations. As an example, you can think of connecting all the information of Spotify (about bands, songs and albums) and all the information you can find in Wikipedia. Why would someone like to connect these sources? Because we could then build an application (app) that shows in Spotify additional information about the things that are mentioned in songs. For example, we could show textual descriptions or pictures of the places that are being mentioned in a song while it is playing. </p>In order to do this, we need to tell the app how things from one and the other source are connected. In our example, we need to tell the app things like this: <i><b> the song "Live it up"</b> (by Jennifer López) in Spotify <b> refers to</b><b> the place "Miami" </b> which is described in Wikipedia. </i><p>However, when one thinks of connecting Spotify with any open information source on the Web, there can be many ways to connect things. We would like you to help us understand what kind of information you think it is more relevant for a particular application. That is, we would like you to decide what pieces of information we should bring together within the app.  </p>You will be given a short description of 1) an application 2) the kind of things we <b>want</b> to connect (e.g. songs and places)  and 3) several types of information that we could include in the application <p>You need to judge the relevance of different types of information. Imagine you are the user of such application and tell us what you would you think it makes sense to see within the context of that application. </p><h3><strong>Process</strong></h3>Follow these easy steps:   <ol><li> Read the description of the context (the goal of the application) that we show in the instructions.  </li>  <li> For each case that we present in the form:</li><ul><li> Read the description of the kind of things that we would like to connect and how they are described (e.g. by title, affiliation etc.)</li><li> Read the specific type of information that we could include, which is presented in a blue square. We are asking about things like "Car is recommended by Person", which means that we would like to add in the Web site, the information about recommendations made by people to the information we have about cars. </li><li> Answer the question indicating whether you think that the information is relevant for the context that we have (i.e. application that we would like to build). You should select a value in the scale of relevance (1 means VERY RELEVANT and 5 means NOT RELEVANT AT ALL). </li> <li> Give a reason that justify your relevance judgment (this is voluntary). </li> <li> Classify the relevance judgment into one of the specified categories. </li></ul> </ol> 
+<hr>
+
+<h3><strong>Thank You!</strong></h3>
+
+Thank you so much for your work! You are helping us a lot. 
+
+This job has been published by researchers at the Institute for Web Science and Technologies (WeST) - University of Koblenz-Landau.
+
+We would like to publish the responses we collect from you (and other contributors) as part of our research, because they will provide valuable knowledge for other computer scientists. The data (your responses to the form) will be published anonymously. We will not reveal your identity. 
+
+If you would like to give us feedback on the task and its design, please fill <a target="_blank" href="http://goo.gl/GkFUj3"> this form </a>.
+
+
+<hr>
+
+<h3><strong>The Context our Our Application </strong></h3>
+
+We would like to create an official Web site for a car company. They have information about the latest cars they have built and sell. The Web site shows pictures, detailed technical descriptions of the cars and some background information about the company. 
+
+We want to add further information by connecting the information of cars with other sources of information.
