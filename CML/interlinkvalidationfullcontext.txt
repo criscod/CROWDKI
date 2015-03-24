@@ -1,7 +1,0 @@
-
-<cml:radios label="Question 1 -Are the two descriptions referring to the same person?" name="main" class="" instructions="Please select only one of the answers" aggregation="agg" validates="required" gold="true">   <cml:radio label="yes"/>  <cml:radio label="no"/>      </cml:radios>    
-<cml:radios label="Question 2 - Select the name of Object 1" name="verifword" class="" instructions="Please select only one of the answers" aggregation="agg" validates="required" gold="true">     <cml:radio label="{{a}} "/>      <cml:radio label="{{b}}  "/>      </cml:radios>
-
-   
-
-  
