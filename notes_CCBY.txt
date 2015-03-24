@@ -1,0 +1,5 @@
+This project uses data that was published by the New York Times under Creative Commons Attribution Share-Alike license (New York Times - Linked Open Data. Evan Sandhaus, Rob Larson.).
+This project uses data that was published by DBPedia under Creative Commons Attribution Share-Alike license(DBpedia. DBpedia Team - http://wiki.dbpedia.org/Imprint.)
+This project uses data that was published by Event Media under Creative Commons Attribution Share-Alike(EventMedia. Raphael Troncy.)
+
+words / tokens

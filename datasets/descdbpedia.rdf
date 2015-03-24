@@ -1,0 +1,22 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+	xmlns:foaf="http://rdfs.org/ns/void#"
+	xmlns:dct="http://purl.org/dc/terms/"
+	xmlns:dcat="http://www.w3.org/ns/dcat#"
+	xmlns:void="http://rdfs.org/ns/void#"
+	xmlns:crowdki="http://crowdki.uni-koblenz.de/datasets#"> 
+  <rdf:Description rdf:about="http://crowdki.uni-koblenz.de/datasets#Dataset2">
+   <dct:description>blabla</dct:description>
+   <dct:language>EN</dct:language>
+   <dcat:keyword>media</dcat:keyword>
+   <foaf:page rdf:resource="http://datasets.org/d2"/>
+   <dct:subject>celebrities</dct:subject>
+   <void:exampleResource rdf:resource="http://datasets.org/d2#r1"/>
+  </rdf:Description>
+   <rdf:Description rdf:about="http://datasets.org/d2#r1">
+  <rdfs:label>label1</rdfs:label>
+  </rdf:Description>
+</rdf:RDF>
