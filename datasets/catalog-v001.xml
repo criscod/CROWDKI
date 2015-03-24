@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
-    <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base="">
-        <uri id="Automatically generated entry, Timestamp=1427009864074" name="duplicate:http://lod.gesis.org/matchingstatistics/eurostat" uri="indic_bt.rdf"/>
-        <uri id="Automatically generated entry, Timestamp=1427009864074" name="duplicate:http://lod.gesis.org/matchingstatistics/eurostat" uri="nace_r2.rdf"/>
-        <uri id="Automatically generated entry, Timestamp=1427009864074" name="duplicate:http://lod.gesis.org/matchingstatistics/oecd" uri="AFA_isic3.rdf"/>
-        <uri id="Automatically generated entry, Timestamp=1427009864074" name="duplicate:http://lod.gesis.org/matchingstatistics/oecd" uri="AFA_var.rdf"/>
-    </group>
-</catalog>
