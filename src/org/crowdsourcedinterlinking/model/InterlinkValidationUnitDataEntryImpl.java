@@ -1,38 +1,40 @@
 package org.crowdsourcedinterlinking.model;
 
 import org.crowdsourcedinterlinking.util.URIutils;
-
+/**
+ * @author csarasua
+ */
 public class InterlinkValidationUnitDataEntryImpl extends UnitDataEntryImpl {
 
-	//I don�t use this class
-	
-	protected String elementA;
-	protected String elementB;
-	protected String relation;
-	
-	protected Dataset datasetA;
-	protected Dataset datasetB;
+    //I don�t use this class
 
-	/*protected String commentA;
-	protected String commentB;
-	*/
-	protected String labelA;
-	protected String labelB;
-	
-	
-	//protected ObjectMapping oMap; 
+    protected String elementA;
+    protected String elementB;
+    protected String relation;
 
-	public InterlinkValidationUnitDataEntryImpl(String elA, String elB,
-			String rel, Dataset dA, Dataset dB) {
-		this.elementA = elA;
-		this.elementB = elB;
-		this.relation = rel;
-		this.datasetA = dA;
-		this.datasetB = dB;
-		this.setGoldenUnit(false);
+    protected Dataset datasetA;
+    protected Dataset datasetB;
 
-		this.labelA = URIutils.getDefaultLabel(elA);
-		this.labelB = URIutils.getDefaultLabel(elB);
+    /*protected String commentA;
+    protected String commentB;
+    */
+    protected String labelA;
+    protected String labelB;
+
+
+    //protected ObjectMapping oMap;
+
+    public InterlinkValidationUnitDataEntryImpl(String elA, String elB,
+                                                String rel, Dataset dA, Dataset dB) {
+        this.elementA = elA;
+        this.elementB = elB;
+        this.relation = rel;
+        this.datasetA = dA;
+        this.datasetB = dB;
+        this.setGoldenUnit(false);
+
+        this.labelA = URIutils.getDefaultLabel(elA);
+        this.labelB = URIutils.getDefaultLabel(elB);
 
 
 
@@ -53,12 +55,12 @@ public class InterlinkValidationUnitDataEntryImpl extends UnitDataEntryImpl {
 				}
 	*/
 
-	}
+    }
 
-	public void loadInfo() {
+    public void loadInfo() {
 
-		// load commentsA and commentsB
-		/*try {
+        // load commentsA and commentsB
+        /*try {
 			if (!this.isGoldenUnit()) {
 
 				Model modelA = this.ontologyA.getModel();
@@ -133,95 +135,95 @@ public class InterlinkValidationUnitDataEntryImpl extends UnitDataEntryImpl {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}*/
-	}
+    }
 
-	public String getElementA() {
-		return elementA;
-	}
+    public String getElementA() {
+        return elementA;
+    }
 
-	public void setElementA(String elementA) {
-		this.elementA = elementA;
-	}
+    public void setElementA(String elementA) {
+        this.elementA = elementA;
+    }
 
-	public String getElementB() {
-		return elementB;
-	}
+    public String getElementB() {
+        return elementB;
+    }
 
-	public void setElementB(String elementB) {
-		this.elementB = elementB;
-	}
+    public void setElementB(String elementB) {
+        this.elementB = elementB;
+    }
 
-	public String getRelation() {
-		return relation;
-	}
+    public String getRelation() {
+        return relation;
+    }
 
-	public Dataset getDatasetA() {
-		return datasetA;
-	}
+    public Dataset getDatasetA() {
+        return datasetA;
+    }
 
-	public void setDatasetA(Dataset datasetA) {
-		this.datasetA = datasetA;
-	}
+    public void setDatasetA(Dataset datasetA) {
+        this.datasetA = datasetA;
+    }
 
-	public Dataset getDatasetB() {
-		return datasetB;
-	}
+    public Dataset getDatasetB() {
+        return datasetB;
+    }
 
-	public void setDatasetB(Dataset datasetB) {
-		this.datasetB = datasetB;
-	}
+    public void setDatasetB(Dataset datasetB) {
+        this.datasetB = datasetB;
+    }
 
-	public void setRelation(String relation) {
-		this.relation = relation;
-	}
+    public void setRelation(String relation) {
+        this.relation = relation;
+    }
 
-	/*public String getCommentA() {
-		return commentA;
-	}
+    /*public String getCommentA() {
+        return commentA;
+    }
 
-	public void setCommentA(String commentA) {
-		this.commentA = commentA;
-	}
+    public void setCommentA(String commentA) {
+        this.commentA = commentA;
+    }
 
-	public String getCommentB() {
-		return commentB;
-	}
+    public String getCommentB() {
+        return commentB;
+    }
 
-	public void setCommentB(String commentB) {
-		this.commentB = commentB;
-	}
+    public void setCommentB(String commentB) {
+        this.commentB = commentB;
+    }
 
-	public Ontology getOntologyA() {
-		return ontologyA;
-	}
+    public Ontology getOntologyA() {
+        return ontologyA;
+    }
 
-	public void setOntologyA(Ontology ontologyA) {
-		this.ontologyA = ontologyA;
-	}
+    public void setOntologyA(Ontology ontologyA) {
+        this.ontologyA = ontologyA;
+    }
 
-	public Ontology getOntologyB() {
-		return ontologyB;
-	}
+    public Ontology getOntologyB() {
+        return ontologyB;
+    }
 
-	public void setOntologyB(Ontology ontologyB) {
-		this.ontologyB = ontologyB;
-	}
+    public void setOntologyB(Ontology ontologyB) {
+        this.ontologyB = ontologyB;
+    }
 */
-	public String getLabelA() {
-		return labelA;
-	}
+    public String getLabelA() {
+        return labelA;
+    }
 
-	public void setLabelA(String labelA) {
-		this.labelA = labelA;
-	}
+    public void setLabelA(String labelA) {
+        this.labelA = labelA;
+    }
 
-	public String getLabelB() {
-		return labelB;
-	}
+    public String getLabelB() {
+        return labelB;
+    }
 
-	public void setLabelB(String labelB) {
-		this.labelB = labelB;
-	}
+    public void setLabelB(String labelB) {
+        this.labelB = labelB;
+    }
 
 
 }

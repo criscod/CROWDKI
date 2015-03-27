@@ -1,55 +1,56 @@
 package org.crowdsourcedinterlinking.util;
 
 import com.hp.hpl.jena.rdf.model.Resource;
-
+/**
+ * @author csarasua
+ */
 public class ClassesAndProperties {
 
 	/*
-	 * The way in which Classes and properties are identified probably will need to be changed if axioms are allowed
+     * The way in which Classes and properties are identified probably will need to be changed if axioms are allowed
 	 * 
 	 * Is an expression also a unique Resource? -- blank nodes? 
 	 */
-	
-	public static boolean isClass(Resource r) {
-		boolean result = true;
 
-		try {
+    public static boolean isClass(Resource r) {
+        boolean result = true;
 
-			String localName = r.getLocalName();
-			String firstCharacterLocalName = localName.substring(0, 1);
-			String firstCharacterLocalNameLower = firstCharacterLocalName
-					.toLowerCase();
+        try {
 
-			if (firstCharacterLocalName.equals(firstCharacterLocalNameLower)) {
-				result = false;
-			}
+            String localName = r.getLocalName();
+            String firstCharacterLocalName = localName.substring(0, 1);
+            String firstCharacterLocalNameLower = firstCharacterLocalName
+                    .toLowerCase();
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+            if (firstCharacterLocalName.equals(firstCharacterLocalNameLower)) {
+                result = false;
+            }
 
-		return result;
-	}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-	public static boolean isProperty(Resource r)
-	{
-		boolean result = false;
+        return result;
+    }
 
-		try {
+    public static boolean isProperty(Resource r) {
+        boolean result = false;
 
-			String localName = r.getLocalName();
-			String firstCharacterLocalName = localName.substring(0, 1);
-			String firstCharacterLocalNameLower = firstCharacterLocalName
-					.toLowerCase();
+        try {
 
-			if (firstCharacterLocalName.equals(firstCharacterLocalNameLower)) {
-				result = true;
-			}
+            String localName = r.getLocalName();
+            String firstCharacterLocalName = localName.substring(0, 1);
+            String firstCharacterLocalNameLower = firstCharacterLocalName
+                    .toLowerCase();
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+            if (firstCharacterLocalName.equals(firstCharacterLocalNameLower)) {
+                result = true;
+            }
 
-		return result;
-	}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
 }

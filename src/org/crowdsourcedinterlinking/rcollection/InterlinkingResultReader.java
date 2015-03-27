@@ -5,13 +5,15 @@ import org.crowdsourcedinterlinking.model.Response;
 import org.crowdsourcedinterlinking.mpublication.Service;
 
 import java.util.Set;
-
+/**
+ * @author csarasua
+ */
 public interface InterlinkingResultReader {
 
-	public Set<Response> readResponsesZip(String microtaskId, Service s);
+    public Set<Response> readResponsesZip(String microtaskId, Service s);
 
-	// only ID needed
-	public Set<Interlink> readResponsesOfMicrotask(String microtaskId,
-												 String type, Service service);
+    // only ID needed
+    public Set<Interlink> readResponsesOfMicrotask(String microtaskId,
+                                                   String type, Service service);
 
 }

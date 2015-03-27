@@ -1,8 +1,10 @@
 package org.crowdsourcedinterlinking.model;
-
+/**
+ * @author csarasua
+ */
 public enum Relation {
 
-	// = , >, <
-	SIMILAR, GENERAL, SPECIFIC, UNKNOWN;
+    // = , >, <
+    SIMILAR, GENERAL, SPECIFIC, UNKNOWN;
 
 }

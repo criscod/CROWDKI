@@ -6,30 +6,69 @@ import org.crowdsourcedinterlinking.mgeneration.HCHILinksGeneratorImpl;
 import org.crowdsourcedinterlinking.model.Dataset;
 import org.crowdsourcedinterlinking.model.TypeOfMappingGoal;
 import org.crowdsourcedinterlinking.mpublication.CwdfInterlinkingMicrotaskPublisherImpl;
+import org.crowdsourcedinterlinking.rcollection.CwdfInterlinkingResultProcessorImpl;
+import org.crowdsourcedinterlinking.rcollection.CwdfInterlinkingResultReaderImpl;
 
 import java.io.File;
 
+/**
+ * @author:csarasua Class for managing the business logic of the interlinking validation / enhancement
+ */
 public class ExperimentManager {
 
 
-	
-	
-	public void runTrialDirectLinksExperiment(Dataset d1, Dataset d2,
-			File fInputInterlinking, TypeOfMappingGoal mappingGoal, boolean context) {
+    public void runTrialDirectLinksExperiment(Dataset d1, Dataset d2,
+                                              File fInputInterlinking, TypeOfMappingGoal mappingGoal, boolean context) {
 
-		try {
+        try {
 
-			DirectLinksGeneratorImpl directLinksGen = new DirectLinksGeneratorImpl(d1, d2, fInputInterlinking);
+            DirectLinksGeneratorImpl directLinksGen = new DirectLinksGeneratorImpl(d1, d2, fInputInterlinking);
+
+
+            CwdfInterlinkingMicrotaskGeneratorImpl microGen = new CwdfInterlinkingMicrotaskGeneratorImpl(
+                    mappingGoal, context);
+
+            CwdfInterlinkingMicrotaskPublisherImpl microPub = new CwdfInterlinkingMicrotaskPublisherImpl();
+
+            InterlinkingMicrotaskManager microTaskManager = new InterlinkingMicrotaskManager(directLinksGen, microGen, microPub);
+            microTaskManager.prepareListOfInterlinkingMicrotasks();
+
+
 			
-			
+			/* from CrowdMAP
+			 *  CwdfResultReaderImpl reader = new CwdfResultReaderImpl(o1, o2);
+			  
+			  CwdfResultProcessorImpl processor = new
+			  CwdfResultProcessorImpl();
+			  
+			  
+			  ResultManager resultManager = new ResultManager( reader,
+			  processor); resultManager.analyseResultsOfTheCrowd(); 
+			  */
 
-			CwdfInterlinkingMicrotaskGeneratorImpl microGen = new CwdfInterlinkingMicrotaskGeneratorImpl(
-					mappingGoal, context);
 
-			CwdfInterlinkingMicrotaskPublisherImpl microPub = new CwdfInterlinkingMicrotaskPublisherImpl();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-			InterlinkingMicrotaskManager microTaskManager = new InterlinkingMicrotaskManager(directLinksGen, microGen, microPub);
-			microTaskManager.prepareListOfInterlinkingMicrotasks();
+    }
+
+    public void runTrial5050LinksExperiment(Dataset d1, Dataset d2,
+                                            File fReferenceInterlinking, File fReferenceNoInterlinking, TypeOfMappingGoal mappingGoal, boolean context) {
+
+        try {
+
+
+            HCHILinksGeneratorImpl halfhalfLinksGen = new HCHILinksGeneratorImpl(d1, d2, fReferenceInterlinking, fReferenceNoInterlinking);
+
+
+            CwdfInterlinkingMicrotaskGeneratorImpl microGen = new CwdfInterlinkingMicrotaskGeneratorImpl(
+                    mappingGoal, context);
+
+            CwdfInterlinkingMicrotaskPublisherImpl microPub = new CwdfInterlinkingMicrotaskPublisherImpl();
+
+            InterlinkingMicrotaskManager microTaskManager = new InterlinkingMicrotaskManager(halfhalfLinksGen, microGen, microPub);
+            microTaskManager.prepareListOfInterlinkingMicrotasks();
 			
 
 			
@@ -43,84 +82,43 @@ public class ExperimentManager {
 			  ResultManager resultManager = new ResultManager( reader,
 			  processor); resultManager.analyseResultsOfTheCrowd(); 
 			  */
-			  
-			 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 
-	}
-	
-	public void runTrial5050LinksExperiment(Dataset d1, Dataset d2,
-			File fReferenceInterlinking, File fReferenceNoInterlinking,TypeOfMappingGoal mappingGoal, boolean context) {
 
-		try {
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-			
-			HCHILinksGeneratorImpl halfhalfLinksGen = new HCHILinksGeneratorImpl(d1, d2, fReferenceInterlinking, fReferenceNoInterlinking);
-			
-			
+    }
 
-			CwdfInterlinkingMicrotaskGeneratorImpl microGen = new CwdfInterlinkingMicrotaskGeneratorImpl(
-					mappingGoal, context);
 
-			CwdfInterlinkingMicrotaskPublisherImpl microPub = new CwdfInterlinkingMicrotaskPublisherImpl();
+    public void runTrialAlgLinksExperiment(Dataset d1, Dataset d2,
+                                           File fDiscoveredInterlinking, File fUnsureInterlinking, TypeOfMappingGoal mappingGoal, boolean context) {
 
-			InterlinkingMicrotaskManager microTaskManager = new InterlinkingMicrotaskManager(halfhalfLinksGen, microGen, microPub);
-			microTaskManager.prepareListOfInterlinkingMicrotasks();
-			
+        try {
 
-			
-			/* from CrowdMAP
-			 *  CwdfResultReaderImpl reader = new CwdfResultReaderImpl(o1, o2);
-			  
-			  CwdfResultProcessorImpl processor = new
-			  CwdfResultProcessorImpl();
-			  
-			  
-			  ResultManager resultManager = new ResultManager( reader,
-			  processor); resultManager.analyseResultsOfTheCrowd(); 
-			  */
-			  
-			 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 
-	}
+            DirectLinksGeneratorImpl discoveredLinksGen = new DirectLinksGeneratorImpl(d1, d2, fDiscoveredInterlinking);
 
-	
-	public void runTrialAlgLinksExperiment(Dataset d1, Dataset d2,
-			File fDiscoveredInterlinking, File fUnsureInterlinking,TypeOfMappingGoal mappingGoal, boolean context) {
 
-		try {
+            CwdfInterlinkingMicrotaskGeneratorImpl microGen = new CwdfInterlinkingMicrotaskGeneratorImpl(
+                    TypeOfMappingGoal.VALIDATION, context);
 
-			
-			DirectLinksGeneratorImpl discoveredLinksGen = new DirectLinksGeneratorImpl(d1, d2, fDiscoveredInterlinking);
-			
-			
+            CwdfInterlinkingMicrotaskPublisherImpl microPub = new CwdfInterlinkingMicrotaskPublisherImpl();
 
-			CwdfInterlinkingMicrotaskGeneratorImpl microGen = new CwdfInterlinkingMicrotaskGeneratorImpl(
-					TypeOfMappingGoal.VALIDATION, context);
+            InterlinkingMicrotaskManager microTaskManager = new InterlinkingMicrotaskManager(discoveredLinksGen, microGen, microPub);
+            microTaskManager.prepareListOfInterlinkingMicrotasks();
 
-			CwdfInterlinkingMicrotaskPublisherImpl microPub = new CwdfInterlinkingMicrotaskPublisherImpl();
 
-			InterlinkingMicrotaskManager microTaskManager = new InterlinkingMicrotaskManager(discoveredLinksGen, microGen, microPub);
-			microTaskManager.prepareListOfInterlinkingMicrotasks();
-			
+            DirectLinksGeneratorImpl unsureLinksGen = new DirectLinksGeneratorImpl(d1, d2, fUnsureInterlinking);
 
-			
-			DirectLinksGeneratorImpl unsureLinksGen = new DirectLinksGeneratorImpl(d1, d2, fUnsureInterlinking);
-			
-			
 
-			CwdfInterlinkingMicrotaskGeneratorImpl microGen2 = new CwdfInterlinkingMicrotaskGeneratorImpl(
-					TypeOfMappingGoal.IDENTIFICATIONA, context);
+            CwdfInterlinkingMicrotaskGeneratorImpl microGen2 = new CwdfInterlinkingMicrotaskGeneratorImpl(
+                    TypeOfMappingGoal.IDENTIFICATIONA, context);
 
-			CwdfInterlinkingMicrotaskPublisherImpl microPub2 = new CwdfInterlinkingMicrotaskPublisherImpl();
+            CwdfInterlinkingMicrotaskPublisherImpl microPub2 = new CwdfInterlinkingMicrotaskPublisherImpl();
 
-			InterlinkingMicrotaskManager microTaskManager2 = new InterlinkingMicrotaskManager(unsureLinksGen, microGen2, microPub2);
-			microTaskManager2.prepareListOfInterlinkingMicrotasks();
+            InterlinkingMicrotaskManager microTaskManager2 = new InterlinkingMicrotaskManager(unsureLinksGen, microGen2, microPub2);
+            microTaskManager2.prepareListOfInterlinkingMicrotasks();
 
 			
 			/* from CrowdMAP
@@ -133,16 +131,26 @@ public class ExperimentManager {
 			  ResultManager resultManager = new ResultManager( reader,
 			  processor); resultManager.analyseResultsOfTheCrowd(); 
 			  */
-			  
-			 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-	}
 
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
+    }
+
+
+    public void readResults(Dataset d1, Dataset d2) {
+        CwdfInterlinkingResultReaderImpl reader = new CwdfInterlinkingResultReaderImpl(d1, d2);
+
+        CwdfInterlinkingResultProcessorImpl processor = new
+                CwdfInterlinkingResultProcessorImpl();
+
+
+        ResultManager resultManager = new ResultManager(reader,
+                processor);
+        resultManager.analyseResultsOfTheCrowd();
+    }
 
 
 }

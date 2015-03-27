@@ -22,14 +22,14 @@ import java.util.Map;
  */
 public class CwdfRelInterlinkingChoicesMicrotaskPublisherImpl implements MicrotaskPublisher {
 
-    private int unitsToOrder=1;
+    private int unitsToOrder = 1;
 
     public String uploadMicrotask(Microtask microtask, Service service) {
 
         String id = null;
 
 
-        RelInterlinkingChoicesJobMicrotaskImpl job = (RelInterlinkingChoicesJobMicrotaskImpl)microtask;
+        RelInterlinkingChoicesJobMicrotaskImpl job = (RelInterlinkingChoicesJobMicrotaskImpl) microtask;
         CwdfService cwdf = (CwdfService) service;
 
         System.out.println("inside upload microtask");
@@ -61,16 +61,16 @@ public class CwdfRelInterlinkingChoicesMicrotaskPublisherImpl implements Microta
 
         String parameters = "job[title]=" + title + "&job[instructions]="
                 + instructions + "&job[cml]=" + cml
-               // + "&job[judgments_per_unit]=" + judgmentsPerUnit
+                // + "&job[judgments_per_unit]=" + judgmentsPerUnit
                 //+ "&job[max_judgments_per_worker]=" + maxJudgmentsPerWorker
                 + "&job[payment_cents]=" + cents;
-System.out.println(parameters);
+        System.out.println(parameters);
 
         try {
             //was postJob.setEntity(new StringEntity(parameters));
             StringEntity se = new StringEntity(parameters, ContentType.create("application/application/x-www-form-urlencoded", "UTF-8"));
             postJob.setEntity(se);
-            System.out.println("postJob "+postJob);
+            System.out.println("postJob " + postJob);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -122,14 +122,13 @@ System.out.println(parameters);
                 }
 
             }
-        }
-        else
-        {
-           System.out.println("problem: "+response.getStatusLine().getReasonPhrase());
+        } else {
+            System.out.println("problem: " + response.getStatusLine().getReasonPhrase());
         }
 
         return id;
     }
+
     public void orderMicrotask(String idMicrotask, Service service) {
         //better to order from the Requester UI once checked that CrowdFlower created the task correctly
         try {

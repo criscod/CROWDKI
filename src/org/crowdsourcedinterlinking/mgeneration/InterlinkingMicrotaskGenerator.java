@@ -1,14 +1,14 @@
 package org.crowdsourcedinterlinking.mgeneration;
 
-import java.util.Set;
-
-
 import org.crowdsourcedinterlinking.model.Interlinking;
 import org.crowdsourcedinterlinking.model.Microtask;
-import org.crowdsourcedinterlinking.model.TypeOfMappingGoal;
 
+import java.util.Set;
+/**
+ * @author csarasua
+ */
 public interface InterlinkingMicrotaskGenerator {
 
-	public Set<Microtask> createMicrotasks(Interlinking a);
+    public Set<Microtask> createMicrotasks(Interlinking a);
 
 }

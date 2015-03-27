@@ -19,10 +19,12 @@ import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.RDFNode;
-
+/**
+ * @author csarasua
+ */
 public class InterlinkIdentificationWithFullContextUnitDataEntryImpl extends
-InterlinkIdentificationUnitDataEntryImpl {
-	/*//private String superClassA = new String("not available");
+        InterlinkIdentificationUnitDataEntryImpl {
+    /*//private String superClassA = new String("not available");
 	private Set<String> superClassesA = new HashSet<String>();
 	private Set<String> siblingsA = new HashSet<String>();
 	private Set<String> subClassesA = new HashSet<String>();
@@ -35,68 +37,66 @@ InterlinkIdentificationUnitDataEntryImpl {
 	
 	
 */
-	
-	private List<FeatureTextValue> listOfFeaturesA = new ArrayList<FeatureTextValue>();
-	private List<FeatureTextValue> listOfFeaturesB = new ArrayList<FeatureTextValue>();
 
-	public InterlinkIdentificationWithFullContextUnitDataEntryImpl(String elA,
-			String elB, Dataset dA, Dataset dB) {
-		super(elA, elB, dA, dB);
+    private List<FeatureTextValue> listOfFeaturesA = new ArrayList<FeatureTextValue>();
+    private List<FeatureTextValue> listOfFeaturesB = new ArrayList<FeatureTextValue>();
 
-	}
-	
-	public void loadInfo() {
+    public InterlinkIdentificationWithFullContextUnitDataEntryImpl(String elA,
+                                                                   String elB, Dataset dA, Dataset dB) {
+        super(elA, elB, dA, dB);
 
-		
-		try {
-			if (!this.isGoldenUnit()) {
+    }
+
+    public void loadInfo() {
+
+
+        try {
+            if (!this.isGoldenUnit()) {
 				
 				/*
 				String queryString = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> SELECT ?label WHERE { <"
 						+ this.elementA
 						+ "> rdfs:label ?label . OPTIONAL {FILTER ( lang(?label) = \"en\" )} } ";
 */
-				
-				String queryString = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX dc: <http://purl.org/dc/elements/1.1/> PREFIX foaf: <http://xmlns.com/foaf/0.1/> PREFIX skos: <http://www.w3.org/2004/02/skos/core#> SELECT ?label WHERE { {<"
-						+ this.elementA
-						+ "> rdfs:label ?label } UNION {<"
-						+ this.elementA
-						+ "> dc:title ?label } UNION {<"
-						+ this.elementA
-						+ "> foaf:name ?label }UNION {<"
-						+ this.elementA
-						+ "> skos:prefLabel ?label } OPTIONAL {FILTER ( lang(?label) = \"en\" || lang(?label)=\"\")} } ";
-				
-				
-				ResultSet results=null;
-				QuerySolution qs;
-				
-				
-				if (this.datasetA.getTypeOfLocation().equals(TypeOfDatasetLocation.SPARQLENDPOINT))
-				{
-					
 
-				      Query query = QueryFactory.create(queryString);
-				      QueryExecution qexec = QueryExecutionFactory.sparqlService(this.datasetA.getLocation(), query);
+                String queryString = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX dc: <http://purl.org/dc/elements/1.1/> PREFIX foaf: <http://xmlns.com/foaf/0.1/> PREFIX skos: <http://www.w3.org/2004/02/skos/core#> SELECT ?label WHERE { {<"
+                        + this.elementA
+                        + "> rdfs:label ?label } UNION {<"
+                        + this.elementA
+                        + "> dc:title ?label } UNION {<"
+                        + this.elementA
+                        + "> foaf:name ?label }UNION {<"
+                        + this.elementA
+                        + "> skos:prefLabel ?label } OPTIONAL {FILTER ( lang(?label) = \"en\" || lang(?label)=\"\")} } ";
 
-				      results = qexec.execSelect();
-				}
-				//If the data set has access via the model (File)
-				else if (this.datasetA.getTypeOfLocation().equals(TypeOfDatasetLocation.FILEDUMP))
-				{
-					QueryExecution qexec2 = QueryExecutionFactory.create(queryString,this.datasetA.getModel());
-					results = qexec2.execSelect();				
-					
-				}
-				
-				
-				while (results.hasNext()) {
-					qs = results.nextSolution();
-					String label = qs.getLiteral("label").getString();
 
-					this.labelA = label;
+                ResultSet results = null;
+                QuerySolution qs;
 
-				}			
+
+                if (this.datasetA.getTypeOfLocation().equals(TypeOfDatasetLocation.SPARQLENDPOINT)) {
+
+
+                    Query query = QueryFactory.create(queryString);
+                    QueryExecution qexec = QueryExecutionFactory.sparqlService(this.datasetA.getLocation(), query);
+
+                    results = qexec.execSelect();
+                }
+                //If the data set has access via the model (File)
+                else if (this.datasetA.getTypeOfLocation().equals(TypeOfDatasetLocation.FILEDUMP)) {
+                    QueryExecution qexec2 = QueryExecutionFactory.create(queryString, this.datasetA.getModel());
+                    results = qexec2.execSelect();
+
+                }
+
+
+                while (results.hasNext()) {
+                    qs = results.nextSolution();
+                    String label = qs.getLiteral("label").getString();
+
+                    this.labelA = label;
+
+                }
 				
 								
 
@@ -104,87 +104,82 @@ InterlinkIdentificationUnitDataEntryImpl {
 						+ this.elementB
 						+ "> rdfs:label ?label2 . OPTIONAL {FILTER ( lang(?label2) = \"en\" )} } ";
 				*/
-				
-				String queryString2 = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX dc: <http://purl.org/dc/elements/1.1/> PREFIX foaf: <http://xmlns.com/foaf/0.1/> PREFIX skos: <http://www.w3.org/2004/02/skos/core# > SELECT ?label WHERE { {<"
-						+ this.elementB
-						+ "> rdfs:label ?label2 } UNION {<"
-						+ this.elementB
-						+ "> dc:title ?label } UNION {<"
-						+ this.elementB
-						+ "> foaf:name ?label }UNION {<"
-						+ this.elementB
-						+ "> skos:prefLabel ?label} OPTIONAL {FILTER ( lang(?label2) = \"en\" || lang(?label2)=\"\")} } ";
-				
-				if (this.datasetB.getTypeOfLocation().equals(TypeOfDatasetLocation.SPARQLENDPOINT))
-				{
-					
 
-				      Query query = QueryFactory.create(queryString2);
-				      QueryExecution qexec = QueryExecutionFactory.sparqlService(this.datasetB.getLocation(), query);
+                String queryString2 = "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX dc: <http://purl.org/dc/elements/1.1/> PREFIX foaf: <http://xmlns.com/foaf/0.1/> PREFIX skos: <http://www.w3.org/2004/02/skos/core# > SELECT ?label WHERE { {<"
+                        + this.elementB
+                        + "> rdfs:label ?label2 } UNION {<"
+                        + this.elementB
+                        + "> dc:title ?label } UNION {<"
+                        + this.elementB
+                        + "> foaf:name ?label }UNION {<"
+                        + this.elementB
+                        + "> skos:prefLabel ?label} OPTIONAL {FILTER ( lang(?label2) = \"en\" || lang(?label2)=\"\")} } ";
 
-				      results = qexec.execSelect();
-				}
-				//If the data set has access via the model (File)
-				else if (this.datasetB.getTypeOfLocation().equals(TypeOfDatasetLocation.FILEDUMP))
-				{
-					QueryExecution qexec2 = QueryExecutionFactory.create(queryString2,this.datasetB.getModel());
-					results = qexec2.execSelect();				
-					
-				}
+                if (this.datasetB.getTypeOfLocation().equals(TypeOfDatasetLocation.SPARQLENDPOINT)) {
 
-			
-				while (results.hasNext()) {
-					qs = results.nextSolution();
 
-					String label2 = qs.getLiteral("label2").getString();
+                    Query query = QueryFactory.create(queryString2);
+                    QueryExecution qexec = QueryExecutionFactory.sparqlService(this.datasetB.getLocation(), query);
 
-					this.labelB = label2;
-				}
-				
-				
-				
-				//the template is checked with value, so feature does not need to show "not available by default"
-				
-				//Load the features to be loaded from the configuration file
-				
-				String listOfFeatureNamesA = ConfigurationManager.getInstance().getListOfFeaturesA(); //URI
-				String[] featuresA = listOfFeatureNamesA.split(";");
-				
-				String messagesStringA=ConfigurationManager.getInstance().getListOfMessagesFeaturesAForUI();
-				String[] messagesA = messagesStringA.split(";");
-				
-				//featuresA.length == messagesA.length (otherwise error log)
-				for (int i=0; i<featuresA.length; i++)
-				{
-					
-					
-					//Find the value for feature s of elemA
-					String valueOfSA= findValueOfElementA(featuresA[i]);
-					
-									
-					FeatureTextValue fVA = new FeatureTextValue(featuresA[i], messagesA[i],valueOfSA);
-					listOfFeaturesA.add(fVA);
-				}
-				
-				String listOfFeatureNamesB = ConfigurationManager.getInstance().getListOfFeaturesB(); //URI
-				String[] featuresB = listOfFeatureNamesB.split(";");
-				
-				String messagesStringB=ConfigurationManager.getInstance().getListOfMessagesFeaturesBForUI();
-				String[] messagesB = messagesStringB.split(";");
-				
-				for (int j=0; j<featuresB.length; j++)
-				{
-					
-					
-					//Find the value for feature s of elemB
-					
-					
-					String valueOfSB= findValueOfElementB(featuresB[j]);
-					
-					
-					FeatureTextValue fVB = new FeatureTextValue(featuresB[j],messagesB[j], valueOfSB);
-					listOfFeaturesB.add(fVB);
-				}
+                    results = qexec.execSelect();
+                }
+                //If the data set has access via the model (File)
+                else if (this.datasetB.getTypeOfLocation().equals(TypeOfDatasetLocation.FILEDUMP)) {
+                    QueryExecution qexec2 = QueryExecutionFactory.create(queryString2, this.datasetB.getModel());
+                    results = qexec2.execSelect();
+
+                }
+
+
+                while (results.hasNext()) {
+                    qs = results.nextSolution();
+
+                    String label2 = qs.getLiteral("label2").getString();
+
+                    this.labelB = label2;
+                }
+
+
+                //the template is checked with value, so feature does not need to show "not available by default"
+
+                //Load the features to be loaded from the configuration file
+
+                String listOfFeatureNamesA = ConfigurationManager.getInstance().getListOfFeaturesA(); //URI
+                String[] featuresA = listOfFeatureNamesA.split(";");
+
+                String messagesStringA = ConfigurationManager.getInstance().getListOfMessagesFeaturesAForUI();
+                String[] messagesA = messagesStringA.split(";");
+
+                //featuresA.length == messagesA.length (otherwise error log)
+                for (int i = 0; i < featuresA.length; i++) {
+
+
+                    //Find the value for feature s of elemA
+                    String valueOfSA = findValueOfElementA(featuresA[i]);
+
+
+                    FeatureTextValue fVA = new FeatureTextValue(featuresA[i], messagesA[i], valueOfSA);
+                    listOfFeaturesA.add(fVA);
+                }
+
+                String listOfFeatureNamesB = ConfigurationManager.getInstance().getListOfFeaturesB(); //URI
+                String[] featuresB = listOfFeatureNamesB.split(";");
+
+                String messagesStringB = ConfigurationManager.getInstance().getListOfMessagesFeaturesBForUI();
+                String[] messagesB = messagesStringB.split(";");
+
+                for (int j = 0; j < featuresB.length; j++) {
+
+
+                    //Find the value for feature s of elemB
+
+
+                    String valueOfSB = findValueOfElementB(featuresB[j]);
+
+
+                    FeatureTextValue fVB = new FeatureTextValue(featuresB[j], messagesB[j], valueOfSB);
+                    listOfFeaturesB.add(fVB);
+                }
 				
 				
 				
@@ -282,7 +277,7 @@ InterlinkIdentificationUnitDataEntryImpl {
 						+ "> rdfs:subPropertyOf ?superclassr . OPTIONAL{?superclassr rdfs:label ?superclass .} ?superclassr rdf:type rdf:Property} OPTIONAL {FILTER ( lang(?superclass) = \"en\")}  }";
 				}
 				
-				// separate by ; and if it is owl thing don«t add
+				// separate by ; and if it is owl thing donï¿½t add
 				qe = QueryExecutionFactory.create(queryString, modelA);
 				results = qe.execSelect();
 
@@ -328,7 +323,7 @@ InterlinkIdentificationUnitDataEntryImpl {
 						+ "> rdfs:subPropertyOf ?superclass2r . OPTIONAL {?superclass2r rdfs:label ?superclass2 .} ?superclass2r rdf:type rdf:Property} OPTIONAL{FILTER ( lang(?superclass2) = \"en\")}  }";
 				}
 				
-				// separate by ; and if it is owl thing don«t add
+				// separate by ; and if it is owl thing donï¿½t add
 				qe = QueryExecutionFactory.create(queryString2, modelB);
 				results = qe.execSelect();
 
@@ -379,7 +374,7 @@ InterlinkIdentificationUnitDataEntryImpl {
 						+ "> rdfs:subPropertyOf ?superclassr . ?superclassr rdf:type rdf:Property . ?siblingr rdfs:subPropertyOf ?superclassr . OPTIONAL {?siblingr rdfs:label ?sibling} }  OPTIONAL {FILTER ( lang(?sibling) = \"en\" )} }";
 				}
 				
-				// separate by ; and if it is owl thing don«t add
+				// separate by ; and if it is owl thing donï¿½t add
 				qe = QueryExecutionFactory.create(queryString, modelA);
 				results = qe.execSelect();
 
@@ -545,92 +540,77 @@ InterlinkIdentificationUnitDataEntryImpl {
 				}
 				*/
 
-			}// end if (!this.isGoldenUnit())
-		}
- catch (Exception e) {
-			e.printStackTrace();
-		}
+            }// end if (!this.isGoldenUnit())
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-	}
+    }
 
 
-	public void loadInfoFromString(List<FeatureTextValue> listOfFeaturesA,List<FeatureTextValue> listOfFeaturesB, String goldData)
-	{
-		try
-		{
-			List<FeatureTextValue> listFeaturesA = new ArrayList<FeatureTextValue>();
-			List<FeatureTextValue> listFeaturesB = new ArrayList<FeatureTextValue>();
-			
-			//Parse the string - labela, labelb, property, values..., validationreadiolabel
-			String[] pairsOfData = goldData.split(";");
-			//Label, Label
-			String[] labelA = pairsOfData[0].split(",");
-			if (labelA[0].startsWith("labela"))
-			{
-				this.labelA = labelA[1];
-				this.setElementA(Constants.NS_CROWD+this.labelA); //invented
-			}
-			
-			String[] labelB = pairsOfData[1].split(",");
-			if (labelB[0].startsWith("labelb"))
-			{
-				this.labelB = labelB[1];
-				this.setElementB(Constants.NS_CROWD+this.labelB);
-			}
-			
-			
-			int sizeA = listOfFeaturesA.size();
-			int sizeB = listOfFeaturesB.size();
-			
-			for (int i=0; i<=sizeA-1; i++)
-			{
-				String[] attributeValue=pairsOfData[(i*2)+2].split(",");
-				String attribute = attributeValue[0];
-				String value = attributeValue[1];
-				FeatureTextValue ftv;
-				if (attribute.startsWith("value"))
-				{
-					
-					ftv = new FeatureTextValue(listOfFeaturesA.get(i).getFeature(),listOfFeaturesA.get(i).getMessageText(), value);
-					if(attribute.endsWith("a"))
-					{
-					this.listOfFeaturesA.add(ftv);
-					}
-					
-					
-				}
-				else
-				{
-					//finished parsing the values
-					break;
-				}
-				
-			}
-			
-			for (int j=0; j<=sizeB-1; j++)
-			{
-				String[] attributeValue=pairsOfData[(j*2)+3].split(",");
-				String attribute = attributeValue[0];
-				String value = attributeValue[1];
-				FeatureTextValue ftv;
-				if (attribute.startsWith("value"))
-				{
-					
-					ftv = new FeatureTextValue(listOfFeaturesB.get(j).getFeature(),listOfFeaturesB.get(j).getMessageText(), value);
-					if(attribute.endsWith("b"))
-					{
-					this.listOfFeaturesB.add(ftv);
-					}
-					
-					
-				}
-				else
-				{
-					//finished parsing the values
-					break;
-				}
-				
-			}
+    public void loadInfoFromString(List<FeatureTextValue> listOfFeaturesA, List<FeatureTextValue> listOfFeaturesB, String goldData) {
+        try {
+            List<FeatureTextValue> listFeaturesA = new ArrayList<FeatureTextValue>();
+            List<FeatureTextValue> listFeaturesB = new ArrayList<FeatureTextValue>();
+
+            //Parse the string - labela, labelb, property, values..., validationreadiolabel
+            String[] pairsOfData = goldData.split(";");
+            //Label, Label
+            String[] labelA = pairsOfData[0].split(",");
+            if (labelA[0].startsWith("labela")) {
+                this.labelA = labelA[1];
+                this.setElementA(Constants.NS_CROWD + this.labelA); //invented
+            }
+
+            String[] labelB = pairsOfData[1].split(",");
+            if (labelB[0].startsWith("labelb")) {
+                this.labelB = labelB[1];
+                this.setElementB(Constants.NS_CROWD + this.labelB);
+            }
+
+
+            int sizeA = listOfFeaturesA.size();
+            int sizeB = listOfFeaturesB.size();
+
+            for (int i = 0; i <= sizeA - 1; i++) {
+                String[] attributeValue = pairsOfData[(i * 2) + 2].split(",");
+                String attribute = attributeValue[0];
+                String value = attributeValue[1];
+                FeatureTextValue ftv;
+                if (attribute.startsWith("value")) {
+
+                    ftv = new FeatureTextValue(listOfFeaturesA.get(i).getFeature(), listOfFeaturesA.get(i).getMessageText(), value);
+                    if (attribute.endsWith("a")) {
+                        this.listOfFeaturesA.add(ftv);
+                    }
+
+
+                } else {
+                    //finished parsing the values
+                    break;
+                }
+
+            }
+
+            for (int j = 0; j <= sizeB - 1; j++) {
+                String[] attributeValue = pairsOfData[(j * 2) + 3].split(",");
+                String attribute = attributeValue[0];
+                String value = attributeValue[1];
+                FeatureTextValue ftv;
+                if (attribute.startsWith("value")) {
+
+                    ftv = new FeatureTextValue(listOfFeaturesB.get(j).getFeature(), listOfFeaturesB.get(j).getMessageText(), value);
+                    if (attribute.endsWith("b")) {
+                        this.listOfFeaturesB.add(ftv);
+                    }
+
+
+                } else {
+                    //finished parsing the values
+                    break;
+                }
+
+            }
 			
 			
 			/*int lastIndex=0;
@@ -690,37 +670,14 @@ InterlinkIdentificationUnitDataEntryImpl {
 			}
 			//here we ignore the property if there is one at the end
 			*/
-			
-			
-			
-			
-			
-			
-			
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 //	public String getSuperClassA() {
 //		return superClassA;
 //	}
@@ -954,170 +911,144 @@ InterlinkIdentificationUnitDataEntryImpl {
 		this.superClassesB = superClassesB;
 	}
 */
-	
-	public List<FeatureTextValue> getListOfFeaturesA() {
-		return listOfFeaturesA;
-	}
 
-	public void setListOfFeaturesA(List<FeatureTextValue> listOfFeaturesA) {
-		this.listOfFeaturesA = listOfFeaturesA;
-	}
+    public List<FeatureTextValue> getListOfFeaturesA() {
+        return listOfFeaturesA;
+    }
 
-	public List<FeatureTextValue> getListOfFeaturesB() {
-		return listOfFeaturesB;
-	}
+    public void setListOfFeaturesA(List<FeatureTextValue> listOfFeaturesA) {
+        this.listOfFeaturesA = listOfFeaturesA;
+    }
 
-	public void setListOfFeaturesB(List<FeatureTextValue> listOfFeaturesB) {
-		this.listOfFeaturesB = listOfFeaturesB;
-	}
+    public List<FeatureTextValue> getListOfFeaturesB() {
+        return listOfFeaturesB;
+    }
 
-		// could be with String a or b and do it, but maybe in the feature I would like to treat differently the source and the target so I separate
-		private String findValueOfElementA(String feature)
-		{
-			String result =new String(" ");
-			String queryString;
-			ResultSet results = null;
-			QuerySolution qs;
-			String [] subFeatures; 
-			try
-			{
-				if (feature.contains(" ")) //it is a "complex" feature. For example I need the rdfs:label of the related lode:atPlace location. Firt jump into the location resource and then get the label of such resource
-				{
-					subFeatures=feature.split(" "); // I define I have only two levels - otherwise update here
-					String feature1=subFeatures[0];
-					String feature2=subFeatures[1];
-					
-					queryString = "SELECT ?value WHERE { <"+this.elementA+"> <"+feature1+"> ?valuefeature1 . ?valuefeature1 <"+feature2+"> ?value FILTER ( lang(?value)=\"en\" || lang(?value)=\"\" )}";
-				}
-				else
-				{
-					queryString = "SELECT ?value WHERE { <"+this.elementA+"> <"+feature+"> ?value FILTER ( lang(?value)=\"en\" || lang(?value)=\"\" )}";
-				}
-				
-				
-				
-				System.out.println("the query to load: "+queryString);
-				//If the data set has access via SPARQL endpoint
-					
-				if (this.datasetA.getTypeOfLocation().equals(TypeOfDatasetLocation.SPARQLENDPOINT))
-				{
-					
+    public void setListOfFeaturesB(List<FeatureTextValue> listOfFeaturesB) {
+        this.listOfFeaturesB = listOfFeaturesB;
+    }
 
-				      Query query = QueryFactory.create(queryString);
-				      QueryExecution qexec = QueryExecutionFactory.sparqlService(this.datasetA.getLocation(), query);
+    // could be with String a or b and do it, but maybe in the feature I would like to treat differently the source and the target so I separate
+    private String findValueOfElementA(String feature) {
+        String result = new String(" ");
+        String queryString;
+        ResultSet results = null;
+        QuerySolution qs;
+        String[] subFeatures;
+        try {
+            if (feature.contains(" ")) //it is a "complex" feature. For example I need the rdfs:label of the related lode:atPlace location. Firt jump into the location resource and then get the label of such resource
+            {
+                subFeatures = feature.split(" "); // I define I have only two levels - otherwise update here
+                String feature1 = subFeatures[0];
+                String feature2 = subFeatures[1];
 
-				      results = qexec.execSelect();
-				}
-				//If the data set has access via the model (File)
-				else if (this.datasetA.getTypeOfLocation().equals(TypeOfDatasetLocation.FILEDUMP))
-				{
-					QueryExecution qexec2 = QueryExecutionFactory.create(queryString,this.datasetA.getModel());
-					results = qexec2.execSelect();				
-					
-				}
-				
-				
-				while (results.hasNext()) {
-					qs = results.nextSolution();
-					RDFNode valueNode = qs.get("value");
-					//check, but the query should always look for literal values
-					if (valueNode instanceof Literal)
-					{
-						result = result + "'";
-						result = result + valueNode.asLiteral().getString();
-						result = result + "'";
-						result = result + " ";
-										}
-					
-				}
-				if (result==null || result.equals(" "))
-				{
-					result = new String("not available");
-				}
-				
-				
-				
-				
-			}
-			catch (Exception e)
-			{
-				e.printStackTrace();
-			}
-			return result;
-		}
-		
-		private String findValueOfElementB(String feature)
-		{
-			String result =new String(" ");
-			String queryString;
-			ResultSet results = null;
-			QuerySolution qs;
-			String [] subFeatures; 
-			try
-			{
-				if (feature.contains(" ")) //it is a "complex" feature. For example I need the rdfs:label of the related lode:atPlace location. Firt jump into the location resource and then get the label of such resource
-				{
-					subFeatures=feature.split(" "); // I define I have only two levels - otherwise update here
-					String feature1=subFeatures[0];
-					String feature2=subFeatures[1];
-					
-					queryString = "SELECT ?value WHERE { <"+this.elementB+"> <"+feature1+"> ?valuefeature1 . ?valuefeature1 <"+feature2+"> ?value FILTER ( lang(?value)=\"en\" || lang(?value)=\"\" )}";
-				}
-				else
-				{
-					queryString = "SELECT ?value WHERE { <"+this.elementB+"> <"+feature+"> ?value FILTER ( lang(?value)=\"en\" || lang(?value)=\"\" )}";
-				}
-				
-				
-				
-				System.out.println("the query to load: "+queryString);
-				//If the data set has access via SPARQL endpoint
-					
-				if (this.datasetB.getTypeOfLocation().equals(TypeOfDatasetLocation.SPARQLENDPOINT))
-				{
-					
+                queryString = "SELECT ?value WHERE { <" + this.elementA + "> <" + feature1 + "> ?valuefeature1 . ?valuefeature1 <" + feature2 + "> ?value FILTER ( lang(?value)=\"en\" || lang(?value)=\"\" )}";
+            } else {
+                queryString = "SELECT ?value WHERE { <" + this.elementA + "> <" + feature + "> ?value FILTER ( lang(?value)=\"en\" || lang(?value)=\"\" )}";
+            }
 
-				      Query query = QueryFactory.create(queryString);
-				      QueryExecution qexec = QueryExecutionFactory.sparqlService(this.datasetB.getLocation(), query);
 
-				      results = qexec.execSelect();
-				}
-				//If the data set has access via the model (File)
-				else if (this.datasetB.getTypeOfLocation().equals(TypeOfDatasetLocation.FILEDUMP))
-				{
-					QueryExecution qexec2 = QueryExecutionFactory.create(queryString,this.datasetB.getModel());
-					results = qexec2.execSelect();				
-					
-				}
-				
-				while (results.hasNext()) {
-					qs = results.nextSolution();
-					RDFNode valueNode = qs.get("value");
-					//check, but the query should always look for literal values
-					if (valueNode instanceof Literal)
-					{
-						result = result + "'";
-						result = result + valueNode.asLiteral().getString();
-						result = result + "'";
-						result = result + " ";
-										}
-					
-				}
-				if (result==null || result.equals(" "))
-				{
-					result = new String("not available");
-				}
-				
-				
-				
-				
-			}
-			catch (Exception e)
-			{
-				e.printStackTrace();
-			}
-			return result;
-		}
+            System.out.println("the query to load: " + queryString);
+            //If the data set has access via SPARQL endpoint
+
+            if (this.datasetA.getTypeOfLocation().equals(TypeOfDatasetLocation.SPARQLENDPOINT)) {
+
+
+                Query query = QueryFactory.create(queryString);
+                QueryExecution qexec = QueryExecutionFactory.sparqlService(this.datasetA.getLocation(), query);
+
+                results = qexec.execSelect();
+            }
+            //If the data set has access via the model (File)
+            else if (this.datasetA.getTypeOfLocation().equals(TypeOfDatasetLocation.FILEDUMP)) {
+                QueryExecution qexec2 = QueryExecutionFactory.create(queryString, this.datasetA.getModel());
+                results = qexec2.execSelect();
+
+            }
+
+
+            while (results.hasNext()) {
+                qs = results.nextSolution();
+                RDFNode valueNode = qs.get("value");
+                //check, but the query should always look for literal values
+                if (valueNode instanceof Literal) {
+                    result = result + "'";
+                    result = result + valueNode.asLiteral().getString();
+                    result = result + "'";
+                    result = result + " ";
+                }
+
+            }
+            if (result == null || result.equals(" ")) {
+                result = new String("not available");
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    private String findValueOfElementB(String feature) {
+        String result = new String(" ");
+        String queryString;
+        ResultSet results = null;
+        QuerySolution qs;
+        String[] subFeatures;
+        try {
+            if (feature.contains(" ")) //it is a "complex" feature. For example I need the rdfs:label of the related lode:atPlace location. Firt jump into the location resource and then get the label of such resource
+            {
+                subFeatures = feature.split(" "); // I define I have only two levels - otherwise update here
+                String feature1 = subFeatures[0];
+                String feature2 = subFeatures[1];
+
+                queryString = "SELECT ?value WHERE { <" + this.elementB + "> <" + feature1 + "> ?valuefeature1 . ?valuefeature1 <" + feature2 + "> ?value FILTER ( lang(?value)=\"en\" || lang(?value)=\"\" )}";
+            } else {
+                queryString = "SELECT ?value WHERE { <" + this.elementB + "> <" + feature + "> ?value FILTER ( lang(?value)=\"en\" || lang(?value)=\"\" )}";
+            }
+
+
+            System.out.println("the query to load: " + queryString);
+            //If the data set has access via SPARQL endpoint
+
+            if (this.datasetB.getTypeOfLocation().equals(TypeOfDatasetLocation.SPARQLENDPOINT)) {
+
+
+                Query query = QueryFactory.create(queryString);
+                QueryExecution qexec = QueryExecutionFactory.sparqlService(this.datasetB.getLocation(), query);
+
+                results = qexec.execSelect();
+            }
+            //If the data set has access via the model (File)
+            else if (this.datasetB.getTypeOfLocation().equals(TypeOfDatasetLocation.FILEDUMP)) {
+                QueryExecution qexec2 = QueryExecutionFactory.create(queryString, this.datasetB.getModel());
+                results = qexec2.execSelect();
+
+            }
+
+            while (results.hasNext()) {
+                qs = results.nextSolution();
+                RDFNode valueNode = qs.get("value");
+                //check, but the query should always look for literal values
+                if (valueNode instanceof Literal) {
+                    result = result + "'";
+                    result = result + valueNode.asLiteral().getString();
+                    result = result + "'";
+                    result = result + " ";
+                }
+
+            }
+            if (result == null || result.equals(" ")) {
+                result = new String("not available");
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 	
 
 	/*public void loadInfo() {
@@ -1213,7 +1144,7 @@ InterlinkIdentificationUnitDataEntryImpl {
 						+ "> rdfs:subPropertyOf ?superclassr . OPTIONAL{?superclassr rdfs:label ?superclass .} ?superclassr rdf:type rdf:Property} OPTIONAL {FILTER ( lang(?superclass) = \"en\")}  }";
 				}
 				
-				// separate by ; and if it is owl thing don«t add
+				// separate by ; and if it is owl thing donï¿½t add
 				qe = QueryExecutionFactory.create(queryString, modelA);
 				results = qe.execSelect();
 
@@ -1259,7 +1190,7 @@ InterlinkIdentificationUnitDataEntryImpl {
 						+ "> rdfs:subPropertyOf ?superclass2r . OPTIONAL {?superclass2r rdfs:label ?superclass2 .} ?superclass2r rdf:type rdf:Property} OPTIONAL{FILTER ( lang(?superclass2) = \"en\")}  }";
 				}
 				
-				// separate by ; and if it is owl thing don«t add
+				// separate by ; and if it is owl thing donï¿½t add
 				qe = QueryExecutionFactory.create(queryString2, modelB);
 				results = qe.execSelect();
 
@@ -1310,7 +1241,7 @@ InterlinkIdentificationUnitDataEntryImpl {
 						+ "> rdfs:subPropertyOf ?superclassr . ?superclassr rdf:type rdf:Property . ?siblingr rdfs:subPropertyOf ?superclassr . OPTIONAL {?siblingr rdfs:label ?sibling} }  OPTIONAL {FILTER ( lang(?sibling) = \"en\" )} }";
 				}
 				
-				// separate by ; and if it is owl thing don«t add
+				// separate by ; and if it is owl thing donï¿½t add
 				qe = QueryExecutionFactory.create(queryString, modelA);
 				results = qe.execSelect();
 

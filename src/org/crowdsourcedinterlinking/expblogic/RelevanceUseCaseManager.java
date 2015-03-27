@@ -8,15 +8,13 @@ import java.io.File;
 
 /**
  * @author csarasua
- * Class to handle the experiment
- * analog to ExperimentManager
+ *         Class to handle the experiment
+ *         analog to ExperimentManager
  */
 public class RelevanceUseCaseManager {
 
 
-
-    public void launchAssessmentDirectInterlinkingChoices(File choicesFile)
-    {
+    public void launchAssessmentDirectInterlinkingChoices(File choicesFile) {
         DirectInterlinkingChoicesGeneratorImpl choicesGen = new DirectInterlinkingChoicesGeneratorImpl(choicesFile);
 
 
@@ -31,14 +29,13 @@ public class RelevanceUseCaseManager {
 
     }
 
-    public void readAssessmentDirectInterlinkingChoices()
-    {
+    public void readAssessmentDirectInterlinkingChoices() {
 
 
 
 
 		/*
-		 CwdfResultReaderImpl reader = new CwdfResultReaderImpl(o1, o2);
+         CwdfResultReaderImpl reader = new CwdfResultReaderImpl(o1, o2);
 
 		  CwdfResultProcessorImpl processor = new
 		  CwdfResultProcessorImpl();

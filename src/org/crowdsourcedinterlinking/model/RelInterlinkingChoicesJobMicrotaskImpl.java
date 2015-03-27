@@ -18,12 +18,13 @@ import java.util.Set;
  */
 public class RelInterlinkingChoicesJobMicrotaskImpl extends JobMicrotaskImpl {
 
-    public void createUI(){}
+    public void createUI() {
+    }
+
     public void createUI(InterlinkingChoices choices) {
 
         String workingDir = System.getProperty("user.dir");
-        String workingDirForFileName = workingDir.replace("\\","/");
-
+        String workingDirForFileName = workingDir.replace("\\", "/");
 
 
         //build the cml file D1D2 section and all the questions
@@ -31,7 +32,7 @@ public class RelInterlinkingChoicesJobMicrotaskImpl extends JobMicrotaskImpl {
 
         try {
             String cmlCode = new String();
-            File cmlFile = new File(workingDirForFileName+"/CML/interlinkingchoices.txt");
+            File cmlFile = new File(workingDirForFileName + "/CML/interlinkingchoices.txt");
             cmlFile.delete();
 
             String ls = System.getProperty("line.separator");
@@ -40,56 +41,51 @@ public class RelInterlinkingChoicesJobMicrotaskImpl extends JobMicrotaskImpl {
             File fileRepeatedBlock = new File(workingDirForFileName + "/CML/interlinkingchoices_repeated.txt");
             List<String> linesRepeated = Files.readLines(fileRepeatedBlock, Charset.defaultCharset());
             String repeatedBlock = new String();
-            for(String lineRep: linesRepeated)
-            {
-                repeatedBlock = repeatedBlock+lineRep;
+            for (String lineRep : linesRepeated) {
+                repeatedBlock = repeatedBlock + lineRep;
             }
 
             File fileDescBlock = new File(workingDirForFileName + "/CML/interlinkingchoices_datasetdesc.txt");
             List<String> linesDesc = Files.readLines(fileDescBlock, Charset.defaultCharset());
             String descBlock = new String();
-            for(String lineDesc: linesDesc)
-            {
-                descBlock = descBlock+lineDesc;
+            for (String lineDesc : linesDesc) {
+                descBlock = descBlock + lineDesc;
             }
 
 
             Set<InterlinkingChoice> choicesSet = choices.getChoices();
-            for(InterlinkingChoice choicei: choicesSet)
-            {
+            for (InterlinkingChoice choicei : choicesSet) {
 
-                String idD1 =choicei.getD1().getTitle();
+                String idD1 = choicei.getD1().getTitle();
                 DatasetDescription desc = choices.getDatasetDescriptions().get(idD1);
                 String text = this.getTextFromDatsetDescription(desc);
                 String descI = new String(descBlock);
-                descI=descI.replaceAll("XXX",text);
-                Files.append(descI,cmlFile,Charset.defaultCharset());
-       //         Files.append(ls, cmlFile, Charset.defaultCharset());
+                descI = descI.replaceAll("XXX", text);
+                Files.append(descI, cmlFile, Charset.defaultCharset());
+                //         Files.append(ls, cmlFile, Charset.defaultCharset());
 
 
-                String idD2 =choicei.getD2().getTitle();
+                String idD2 = choicei.getD2().getTitle();
                 DatasetDescription desc2 = choices.getDatasetDescriptions().get(idD2);
                 String text2 = this.getTextFromDatsetDescription(desc2);
                 String descI2 = new String(descBlock);
-                descI2= descI2.replaceAll("XXX",text2);
-                Files.append(descI2,cmlFile,Charset.defaultCharset());
-              //  Files.append(ls, cmlFile, Charset.defaultCharset());
+                descI2 = descI2.replaceAll("XXX", text2);
+                Files.append(descI2, cmlFile, Charset.defaultCharset());
+                //  Files.append(ls, cmlFile, Charset.defaultCharset());
 
                 //statement part
                 String textSt = new String();
-                textSt = textSt +choicei.getLabelClass1();
-                textSt = textSt+" ";
-                textSt = textSt+choicei.getLabelPredicate();
-                textSt = textSt+" ";
-                textSt = textSt+choicei.getLabelClass2();
-                textSt = textSt+" ";
-                String repeatedBlock2=repeatedBlock.replaceAll("XXX", textSt);
-                Files.append(repeatedBlock2,cmlFile,Charset.defaultCharset());
-              //  Files.append(ls, cmlFile, Charset.defaultCharset());
+                textSt = textSt + choicei.getLabelClass1();
+                textSt = textSt + " ";
+                textSt = textSt + choicei.getLabelPredicate();
+                textSt = textSt + " ";
+                textSt = textSt + choicei.getLabelClass2();
+                textSt = textSt + " ";
+                String repeatedBlock2 = repeatedBlock.replaceAll("XXX", textSt);
+                Files.append(repeatedBlock2, cmlFile, Charset.defaultCharset());
+                //  Files.append(ls, cmlFile, Charset.defaultCharset());
 
             }
-
-
 
 
             //issue CrowdFlower with sending code directly from string
@@ -111,18 +107,17 @@ public class RelInterlinkingChoicesJobMicrotaskImpl extends JobMicrotaskImpl {
     }
 
     //in unit data jobs in link validation jena RDF access is not at this level - refactor
-    private String getTextFromDatsetDescription(DatasetDescription desc)
-    {
+    private String getTextFromDatsetDescription(DatasetDescription desc) {
         String resultText = new String();
         Model descModelD1 = desc.getDescription();
-        String query="SELECT ?desc ?keyword ?subject ?res ?property WHERE {?s <http://purl.org/dc/terms/description> ?desc . ?s <http://www.w3.org/ns/dcat#keyword> ?keyword . ?s <http://purl.org/dc/terms/subject> ?subject . ?s <http://rdfs.org/ns/void#exampleResource> ?eres . ?eres ?property ?object . ?eres <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?res }";
-        ResultSet results=null;
+        String query = "SELECT ?desc ?keyword ?subject ?res ?property WHERE {?s <http://purl.org/dc/terms/description> ?desc . ?s <http://www.w3.org/ns/dcat#keyword> ?keyword . ?s <http://purl.org/dc/terms/subject> ?subject . ?s <http://rdfs.org/ns/void#exampleResource> ?eres . ?eres ?property ?object . ?eres <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?res }";
+        ResultSet results = null;
         QuerySolution qs;
 
         QueryExecution qexec = QueryExecutionFactory.create(query, descModelD1);
         results = qexec.execSelect();
         boolean first = true;
-        Resource prevResource=null;
+        Resource prevResource = null;
         while (results.hasNext()) {
             qs = results.nextSolution();
             if (first) {
@@ -135,12 +130,11 @@ public class RelInterlinkingChoicesJobMicrotaskImpl extends JobMicrotaskImpl {
 
                 Resource r = qs.getResource("res");
 
-                Resource p= qs.getResource("property");
+                Resource p = qs.getResource("property");
 
-                resultText = resultText+" "+r.getLocalName()+"s are described with "+p.getLocalName();
-                prevResource=r;
-            }
-            else {
+                resultText = resultText + " " + r.getLocalName() + "s are described with " + p.getLocalName();
+                prevResource = r;
+            } else {
                 Resource exResource = qs.getResource("res");
                 Resource prop = qs.getResource("property");
                 if (exResource.getLocalName().equals(prevResource.getLocalName())) {

@@ -17,16 +17,16 @@ import java.util.Set;
 public class CwdfRelInterlinkingMicrotaskGeneratorImpl implements RelInterlinkingChoicesMicrotaskGenerator {
 
     String workingDir = System.getProperty("user.dir");
-    String workingDirForFileName = workingDir.replace("\\","/");
+    String workingDirForFileName = workingDir.replace("\\", "/");
 
-    public CwdfRelInterlinkingMicrotaskGeneratorImpl()
-    {
+    public CwdfRelInterlinkingMicrotaskGeneratorImpl() {
         //no config
     }
+
     public Set<Microtask> createMicrotasks(InterlinkingChoices interlinkingChoices) {
         Set<Microtask> result = new HashSet<Microtask>();
 
-        try{
+        try {
 
 
             RelInterlinkingChoicesJobMicrotaskImpl job = new RelInterlinkingChoicesJobMicrotaskImpl();
@@ -36,12 +36,10 @@ public class CwdfRelInterlinkingMicrotaskGeneratorImpl implements RelInterlinkin
             //Read the instructions from the file
             File fileInstructions = new File(workingDirForFileName + "/CML/interlinkingchoices_instructions.txt");
             List<String> linesInstructions = Files.readLines(fileInstructions, Charset.defaultCharset());
-            String instructions =new String();
-            for(String lineInstr: linesInstructions)
-            {
-                instructions = instructions+lineInstr;
+            String instructions = new String();
+            for (String lineInstr : linesInstructions) {
+                instructions = instructions + lineInstr;
             }
-
 
 
             job.setInstructions(instructions);
@@ -71,9 +69,7 @@ public class CwdfRelInterlinkingMicrotaskGeneratorImpl implements RelInterlinkin
 					validationJob.createUI();
              */
 
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return result;

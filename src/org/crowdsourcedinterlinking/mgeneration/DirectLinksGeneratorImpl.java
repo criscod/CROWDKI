@@ -1,54 +1,42 @@
 package org.crowdsourcedinterlinking.mgeneration;
 
-import java.io.File;
-import java.nio.charset.Charset;
-import java.util.Set;
-
-import org.crowdsourcedinterlinking.model.Alignment;
-import org.crowdsourcedinterlinking.model.AlignmentParser;
 import org.crowdsourcedinterlinking.model.Dataset;
-import org.crowdsourcedinterlinking.model.Interlink;
 import org.crowdsourcedinterlinking.model.Interlinking;
 import org.crowdsourcedinterlinking.model.InterlinkingParser;
-import org.crowdsourcedinterlinking.model.Mapping;
-import org.crowdsourcedinterlinking.model.Ontology;
-import org.crowdsourcedinterlinking.util.Time;
 
-import com.google.common.io.Files;
+import java.io.File;
+/**
+ * @author csarasua
+ */
+public class DirectLinksGeneratorImpl extends LinksGeneratorImpl {
 
-public class DirectLinksGeneratorImpl  extends LinksGeneratorImpl {
-	
-	private File fInputInterlinkig;
+    private File fInputInterlinkig;
 
-	public DirectLinksGeneratorImpl(Dataset d1, Dataset d2, File inputInterlinking)
-	{
-		//This generator is used both for 50%links correct and 50%links incorrect, and for the sure ones of the algorithm and the unsure ones - it is just a matter of sending one file or  the other
-		
-		this.setDataset1(d1);
-		this.setDataset2(d2);
-		
-		this.fInputInterlinkig=inputInterlinking; 
-		
-	}
-	
-	
-	public Interlinking generateLinks()
-	{
-		Interlinking result=null;
-		
-		
-				try
-		{
-					
-					this.registerDatasetsInTrackFile();
-			InterlinkingParser parser = new InterlinkingParser(this.fInputInterlinkig);
-			parser.parseInterlinking(this.getDataset1(), this.getDataset2());
-			result = parser.getInterlinking();
-			
-			
-			
-			//for printing
-			
+    public DirectLinksGeneratorImpl(Dataset d1, Dataset d2, File inputInterlinking) {
+        //This generator is used both for 50%links correct and 50%links incorrect, and for the sure ones of the algorithm and the unsure ones - it is just a matter of sending one file or  the other
+
+        this.setDataset1(d1);
+        this.setDataset2(d2);
+
+        this.fInputInterlinkig = inputInterlinking;
+
+    }
+
+
+    public Interlinking generateLinks() {
+        Interlinking result = null;
+
+
+        try {
+
+            this.registerDatasetsInTrackFile();
+            InterlinkingParser parser = new InterlinkingParser(this.fInputInterlinkig);
+            parser.parseInterlinking(this.getDataset1(), this.getDataset2());
+            result = parser.getInterlinking();
+
+
+            //for printing
+
 			/*File resultsFile = new File(
 					"C:/Users/csarasua/workspace_PHD/ISWC2012experiment/testLinksGeneration.txt");
 			Files.write("ALGORITHM " + Time.currentTime(), resultsFile,
@@ -67,14 +55,12 @@ public class DirectLinksGeneratorImpl  extends LinksGeneratorImpl {
 						Charset.defaultCharset());
 				Files.append(ls, resultsFile, Charset.defaultCharset());
 			}*/
-			
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		return result; 
-	}
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 	
 	
 	

@@ -5,42 +5,41 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class UserDB {
-	
-	private Connection connect;
-	private String hostname = "localhost";
-	private String schema ="crowdmapinput"; 
-	private String user ="root";
-	private String password="rootwest2012";
 
-	public UserDB() {
+    private Connection connect;
+    private String hostname = "localhost";
+    private String schema = "crowdmapinput";
+    private String user = "root";
+    private String password = "xxx";
 
-		try {
+    public UserDB() {
 
-			DriverManager.registerDriver(new com.mysql.jdbc.Driver());
-			connect = (Connection) DriverManager.getConnection("jdbc:mysql://"
-					+ hostname + "/" + schema + "?autoReconnect=true", user,
-					password);
+        try {
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+            DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+            connect = (Connection) DriverManager.getConnection("jdbc:mysql://"
+                            + hostname + "/" + schema + "?autoReconnect=true", user,
+                    password);
 
-	public void closeConnection() {
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
-		try {
+    public void closeConnection() {
 
-			connect.close();
-		} catch (Exception e) {
-			System.out.println("Error");
-		}
+        try {
 
-	}
+            connect.close();
+        } catch (Exception e) {
+            System.out.println("Error");
+        }
 
-	public Connection getConnection() {
-		return connect;
-	}
+    }
 
+    public Connection getConnection() {
+        return connect;
+    }
 
 
 }

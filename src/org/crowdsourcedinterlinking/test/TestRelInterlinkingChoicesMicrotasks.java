@@ -11,11 +11,10 @@ import java.io.File;
 public class TestRelInterlinkingChoicesMicrotasks {
 
     @Test
-    public void testFakeChoicesGeneration()
-    {
+    public void testFakeChoicesGeneration() {
         RelevanceUseCaseManager manager = new RelevanceUseCaseManager();
         String workingDir = System.getProperty("user.dir");
-        String workingDirForFileName = workingDir.replace("\\","/");
-        manager.launchAssessmentDirectInterlinkingChoices(new File(workingDirForFileName+"/datasets/choices.txt"));
+        String workingDirForFileName = workingDir.replace("\\", "/");
+        manager.launchAssessmentDirectInterlinkingChoices(new File(workingDirForFileName + "/datasets/choices.txt"));
     }
 }

@@ -10,9 +10,9 @@ import java.io.File;
  */
 public class DatasetDescription {
 
-   /*
-    * Name for identifying the dataset
-    */
+    /*
+     * Name for identifying the dataset
+     */
     private String datasetId;
     /**
      * description containing DCAT, VoiD statements and example resources (described completely) in RDF/XML
@@ -20,8 +20,7 @@ public class DatasetDescription {
      */
     private Model description;
 
-    public DatasetDescription(String id, File desc)
-    {
+    public DatasetDescription(String id, File desc) {
         this.datasetId = id;
 
         this.description = ModelFactory.createDefaultModel();

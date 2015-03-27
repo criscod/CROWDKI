@@ -1,112 +1,114 @@
 package org.crowdsourcedinterlinking.model;
 
 import com.hp.hpl.jena.rdf.model.Resource;
-
+/**
+ * @author csarasua
+ */
 public class Mapping {
 
-	private String id;
+    private String id;
 
-	private Resource elementA;
-	private Resource elementB;
-	private Relation relation;
+    private Resource elementA;
+    private Resource elementB;
+    private Relation relation;
 
-	private double measure;
+    private double measure;
 
-	private boolean invented;
+    private boolean invented;
 
-	public Mapping(Resource elemA, Resource elemB, Relation rel, double m) {
-		this.elementA = elemA;
-		this.elementB = elemB;
-		this.relation = rel;
-		this.measure = m;
+    public Mapping(Resource elemA, Resource elemB, Relation rel, double m) {
+        this.elementA = elemA;
+        this.elementB = elemB;
+        this.relation = rel;
+        this.measure = m;
 
-		this.id = elemA.getLocalName() + elemB.getLocalName();
-		this.invented = false;
+        this.id = elemA.getLocalName() + elemB.getLocalName();
+        this.invented = false;
 
-	}
+    }
 
-	public Mapping(Resource elemA, Resource elemB, Relation rel) {
-		this.elementA = elemA;
-		this.elementB = elemB;
-		this.relation = rel;
+    public Mapping(Resource elemA, Resource elemB, Relation rel) {
+        this.elementA = elemA;
+        this.elementB = elemB;
+        this.relation = rel;
 
-		this.id = elemA.getLocalName() + elemB.getLocalName();
-		this.invented = false;
-	}
+        this.id = elemA.getLocalName() + elemB.getLocalName();
+        this.invented = false;
+    }
 
-	public boolean isInvented() {
-		return invented;
-	}
+    public boolean isInvented() {
+        return invented;
+    }
 
-	public void setInvented(boolean invented) {
-		this.invented = invented;
-	}
+    public void setInvented(boolean invented) {
+        this.invented = invented;
+    }
 
-	public Resource getElementA() {
-		return elementA;
-	}
+    public Resource getElementA() {
+        return elementA;
+    }
 
-	public void setElementA(Resource elementA) {
-		this.elementA = elementA;
-	}
+    public void setElementA(Resource elementA) {
+        this.elementA = elementA;
+    }
 
-	public Resource getElementB() {
-		return elementB;
-	}
+    public Resource getElementB() {
+        return elementB;
+    }
 
-	public void setElementB(Resource elementB) {
-		this.elementB = elementB;
-	}
+    public void setElementB(Resource elementB) {
+        this.elementB = elementB;
+    }
 
-	public String getRelation() {
+    public String getRelation() {
 
-		String resultRelation = "=";
+        String resultRelation = "=";
 
-		switch (this.relation) {
-		case SIMILAR:
-			resultRelation = "=";
-			break;
-		case GENERAL:
-			// resultRelation=">";
-			resultRelation = "&gt;";
-			break;
-		case SPECIFIC:
-			// resultRelation="<";
-			resultRelation = "&lt;";
-			break;
-		case UNKNOWN: // this is only for generatingPairs case Cartesian and
-						// Algorithm (without the relation)
-			resultRelation = "";
-			break;
-		}
+        switch (this.relation) {
+            case SIMILAR:
+                resultRelation = "=";
+                break;
+            case GENERAL:
+                // resultRelation=">";
+                resultRelation = "&gt;";
+                break;
+            case SPECIFIC:
+                // resultRelation="<";
+                resultRelation = "&lt;";
+                break;
+            case UNKNOWN: // this is only for generatingPairs case Cartesian and
+                // Algorithm (without the relation)
+                resultRelation = "";
+                break;
+        }
 
-		return resultRelation;
-	}
+        return resultRelation;
+    }
 
-	public void setRelation(Relation relation) {
-		this.relation = relation;
-	}
+    public void setRelation(Relation relation) {
+        this.relation = relation;
+    }
 
-	public String getMeasure() {
-	
-		
-		return String.valueOf(measure);
-	}
+    public String getMeasure() {
 
-	public void setMeasure(double measure) {
-		this.measure = measure;
-	}
 
-	public String getId() {
-		return id;
-	}
+        return String.valueOf(measure);
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public void setMeasure(double measure) {
+        this.measure = measure;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
 	/*
-	 * @Override public int hashCode() {
+     * @Override public int hashCode() {
 	 * 
 	 * return this.relation.toString().hashCode() * 31 +
 	 * (this.elementA.getURI().hashCode() * this.elementB.getURI().hashCode());

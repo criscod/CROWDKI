@@ -2,8 +2,8 @@ package org.crowdsourcedinterlinking.model;
 
 /**
  * @author csarasua
- * Class to keep an individual interlinking choice or possibility.
- * It describes the type of objects to be connected and the predicate used in the links.
+ *         Class to keep an individual interlinking choice or possibility.
+ *         It describes the type of objects to be connected and the predicate used in the links.
  */
 public class InterlinkingChoice {
 
@@ -25,8 +25,7 @@ public class InterlinkingChoice {
     private Dataset d1;
     private Dataset d2;
 
-    public InterlinkingChoice(Dataset d1, Dataset d2, String uri1, String labeluri1, String predicate, String labelPredicate, String uri2, String labeluri2)
-    {
+    public InterlinkingChoice(Dataset d1, Dataset d2, String uri1, String labeluri1, String predicate, String labelPredicate, String uri2, String labeluri2) {
         this.d1 = d1;
         this.d2 = d2;
 
@@ -40,8 +39,6 @@ public class InterlinkingChoice {
         this.labelPredicate = labelPredicate;
 
 
-
-
     }
 
     public String getUriClass1() {
@@ -51,7 +48,6 @@ public class InterlinkingChoice {
     public void setUriClass1(String uriClass1) {
         this.uriClass1 = uriClass1;
     }
-
 
 
     public String getLabelClass1() {
@@ -86,7 +82,6 @@ public class InterlinkingChoice {
     public void setUriPredicate(String uriPredicate) {
         this.uriPredicate = uriPredicate;
     }
-
 
 
     public String getLabelPredicate() {

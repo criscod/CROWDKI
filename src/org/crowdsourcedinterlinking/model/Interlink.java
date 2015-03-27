@@ -2,111 +2,113 @@ package org.crowdsourcedinterlinking.model;
 
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.Resource;
-
+/**
+ * @author csarasua
+ */
 public class Interlink {
 
-	private String id;
+    private String id;
 
-	private Resource elementA;
-	private Resource elementB;
-	private Property relation;
+    private Resource elementA;
+    private Resource elementB;
+    private Property relation;
 
-	private double measure;
+    private double measure;
 
-	private boolean invented;
+    private boolean invented;
 
-	public Interlink(Resource elemA, Resource elemB, Property rel, double m) {
-		this.elementA = elemA;
-		this.elementB = elemB;
-		this.relation = rel;
-		this.measure = m;
+    public Interlink(Resource elemA, Resource elemB, Property rel, double m) {
+        this.elementA = elemA;
+        this.elementB = elemB;
+        this.relation = rel;
+        this.measure = m;
 
-		this.id = elemA.getLocalName() + elemB.getLocalName();
-		this.invented = false;
+        this.id = elemA.getLocalName() + elemB.getLocalName();
+        this.invented = false;
 
-	}
+    }
 
-	public Interlink(Resource elemA, Resource elemB, Property rel) {
-		this.elementA = elemA;
-		this.elementB = elemB;
-		this.relation = rel;
+    public Interlink(Resource elemA, Resource elemB, Property rel) {
+        this.elementA = elemA;
+        this.elementB = elemB;
+        this.relation = rel;
 
-		this.id = elemA.getLocalName() + elemB.getLocalName();
-		this.invented = false;
-	}
+        this.id = elemA.getLocalName() + elemB.getLocalName();
+        this.invented = false;
+    }
 
-	public boolean isInvented() {
-		return invented;
-	}
+    public boolean isInvented() {
+        return invented;
+    }
 
-	public void setInvented(boolean invented) {
-		this.invented = invented;
-	}
+    public void setInvented(boolean invented) {
+        this.invented = invented;
+    }
 
-	public Resource getElementA() {
-		return elementA;
-	}
+    public Resource getElementA() {
+        return elementA;
+    }
 
-	public void setElementA(Resource elementA) {
-		this.elementA = elementA;
-	}
+    public void setElementA(Resource elementA) {
+        this.elementA = elementA;
+    }
 
-	public Resource getElementB() {
-		return elementB;
-	}
+    public Resource getElementB() {
+        return elementB;
+    }
 
-	public void setElementB(Resource elementB) {
-		this.elementB = elementB;
-	}
+    public void setElementB(Resource elementB) {
+        this.elementB = elementB;
+    }
 
-	public Property getRelation() {
+    public Property getRelation() {
 
-		return this.relation;
-	}
+        return this.relation;
+    }
 
-	public void setRelation(Property relation) {
-		this.relation = relation;
-	}
+    public void setRelation(Property relation) {
+        this.relation = relation;
+    }
 
-	public String getMeasure() {
-	
-		
-		return String.valueOf(measure);
-	}
+    public String getMeasure() {
 
-	public void setMeasure(double measure) {
-		this.measure = measure;
-	}
 
-	public String getId() {
-		return id;
-	}
+        return String.valueOf(measure);
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public void setMeasure(double measure) {
+        this.measure = measure;
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+    public String getId() {
+        return id;
+    }
 
-		Interlink interlink = (Interlink) o;
+    public void setId(String id) {
+        this.id = id;
+    }
 
-		if (!elementA.equals(interlink.elementA)) return false;
-		if (!elementB.equals(interlink.elementB)) return false;
-		if (!id.equals(interlink.id)) return false;
-		if (!relation.equals(interlink.relation)) return false;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-		return true;
-	}
+        Interlink interlink = (Interlink) o;
 
-	@Override
-	public int hashCode() {
-		int result = id.hashCode();
-		result = 31 * result + elementA.hashCode();
-		result = 31 * result + elementB.hashCode();
-		result = 31 * result + relation.hashCode();
-		return result;
-	}
+        if (!elementA.equals(interlink.elementA)) return false;
+        if (!elementB.equals(interlink.elementB)) return false;
+        if (!id.equals(interlink.id)) return false;
+        if (!relation.equals(interlink.relation)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + elementA.hashCode();
+        result = 31 * result + elementB.hashCode();
+        result = 31 * result + relation.hashCode();
+        return result;
+    }
 }

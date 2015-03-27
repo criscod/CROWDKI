@@ -1,13 +1,14 @@
 package org.crowdsourcedinterlinking.mgeneration;
 
-import org.crowdsourcedinterlinking.model.Alignment;
 import org.crowdsourcedinterlinking.model.Interlinking;
 
-	
-	public interface LinksGenerator {
+/**
+ * @author csarasua
+ */
+public interface LinksGenerator {
 
-		public Interlinking generateLinks();
+    public Interlinking generateLinks();
 
-	}
+}
 
 

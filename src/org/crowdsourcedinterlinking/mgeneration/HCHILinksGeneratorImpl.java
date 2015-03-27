@@ -1,154 +1,60 @@
 package org.crowdsourcedinterlinking.mgeneration;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.util.Set;
-
-import org.crowdsourcedinterlinking.model.Alignment;
-import org.crowdsourcedinterlinking.model.AlignmentParser;
 import org.crowdsourcedinterlinking.model.Dataset;
 import org.crowdsourcedinterlinking.model.Interlink;
 import org.crowdsourcedinterlinking.model.Interlinking;
 import org.crowdsourcedinterlinking.model.InterlinkingParser;
-import org.crowdsourcedinterlinking.model.Mapping;
-import org.crowdsourcedinterlinking.model.Ontology;
-import org.crowdsourcedinterlinking.util.ConfigurationManager;
-import org.crowdsourcedinterlinking.util.Time;
 
-import com.google.common.io.Files;
+import java.io.File;
+import java.util.Set;
 
-public class HCHILinksGeneratorImpl  extends LinksGeneratorImpl {
-	
-	private File fReferenceInterlinkig;
-	private File fReferenceNoInterlinking;
-	
-	public HCHILinksGeneratorImpl(Dataset d1, Dataset d2, File referenceInterlinking, File referenceNoInterlinking)
-	{
-		//This generator is used both for 50%links correct and 50%links incorrect, and for the sure ones of the algorithm and the unsure ones - it is just a matter of sending one file or  the other
-		
-		this.setDataset1(d1);
-		this.setDataset2(d2);
-		
-		this.fReferenceInterlinkig=referenceInterlinking; 
-		this.fReferenceNoInterlinking=referenceNoInterlinking; 
-	}
-	
-	
-	
-	
-	public Interlinking generateLinks()
-	{
-		Interlinking result=null;
-		Interlinking noInterlinking=null;
-		
-		try
-		{
-		this.registerDatasetsInTrackFile();
+/**
+ * @author csarasua
+ */
+public class HCHILinksGeneratorImpl extends LinksGeneratorImpl {
 
-		
-		
-			InterlinkingParser parser = new InterlinkingParser(this.fReferenceInterlinkig);
-			parser.parseInterlinking(this.getDataset1(), this.getDataset2());
-			result = parser.getInterlinking();
-		System.out.println("size of interlinks "+result.getSetOfInterLinks().size());
-			
-			InterlinkingParser parser2 = new InterlinkingParser(this.fReferenceNoInterlinking);
-			parser2.parseInterlinking(this.getDataset1(), this.getDataset2());
-			noInterlinking = parser2.getInterlinking();
-			Set<Interlink> setNoInterlinks = noInterlinking.getSetOfInterLinks();
-			System.out.println("size of no interlinks "+setNoInterlinks.size());
+    private File fReferenceInterlinkig;
+    private File fReferenceNoInterlinking;
 
-			result.getSetOfInterLinks().addAll(setNoInterlinks);
-			System.out.println("size of interlinks (after adding in theroy the set of not interlinks "+result.getSetOfInterLinks().size());
-			
-			
-			//for printing
-			
-			File resultsFile = new File(
-					"C:/Users/csarasua/workspace_PHD/ISWC2012experiment/testLinksGeneration.txt");
-			Files.write("ALGORITHM " + Time.currentTime(), resultsFile,
-					Charset.defaultCharset());
-			String ls = System.getProperty("line.separator");
-			Files.append(ls, resultsFile, Charset.defaultCharset());
+    public HCHILinksGeneratorImpl(Dataset d1, Dataset d2, File referenceInterlinking, File referenceNoInterlinking) {
+        //This generator is used both for 50%links correct and 50%links incorrect, and for the sure ones of the algorithm and the unsure ones - it is just a matter of sending one file or  the other
 
-			
-			
-			for (Interlink intl : result.getSetOfInterLinks()) {
+        this.setDataset1(d1);
+        this.setDataset2(d2);
 
-				Files.append(
-						"Link: elem1: " + intl.getElementA().getURI()
-								+ " elem2: " + intl.getElementB().getURI()
-								+ " rel: " + intl.getRelation(), resultsFile,
-						Charset.defaultCharset());
-				Files.append(ls, resultsFile, Charset.defaultCharset());
-			}
-			
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		return result; 
-	}
-	
-	
-	
-	/*
-	 * 
-	 * private File algorithmAlignment;
+        this.fReferenceInterlinkig = referenceInterlinking;
+        this.fReferenceNoInterlinking = referenceNoInterlinking;
+    }
 
-	public AlgorithmPairsGeneratorImpl(Ontology o1, Ontology o2,
-			File algorithmAlignment) {
-		try {
-			this.setOntology1(o1);
-			this.setOntology2(o2);
 
-			this.algorithmAlignment = algorithmAlignment;
-			this.loadAlignmentElements();
+    public Interlinking generateLinks() {
+        Interlinking result = null;
+        Interlinking noInterlinking = null;
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+        try {
+            this.registerDatasetsInTrackFile();
 
-	public Alignment generatePairs() {
-		Alignment result = null;
 
-		try {
-			this.registerOntologiesInTrackFile();
+            InterlinkingParser parser = new InterlinkingParser(this.fReferenceInterlinkig);
+            parser.parseInterlinking(this.getDataset1(), this.getDataset2());
+            result = parser.getInterlinking();
+            System.out.println("size of interlinks " + result.getSetOfInterLinks().size());
 
-			AlignmentParser p = new AlignmentParser(this.algorithmAlignment, oMap);
-			p.parseAlignment(this.getOntology1(), this.getOntology2());
-			// they will contain relations, but when generating the type of
-			// Microtask, the relation should be hidden
-			result = p.getAlignment();
+            InterlinkingParser parser2 = new InterlinkingParser(this.fReferenceNoInterlinking);
+            parser2.parseInterlinking(this.getDataset1(), this.getDataset2());
+            noInterlinking = parser2.getInterlinking();
+            Set<Interlink> setNoInterlinks = noInterlinking.getSetOfInterLinks();
+            System.out.println("size of no interlinks " + setNoInterlinks.size());
 
-			File resultsFile = new File(
-					"C:/Users/csarasua/workspace_PHD/ISWC2012experiment/testPairsGeneration.txt");
-			Files.write("ALGORITHM " + Time.currentTime(), resultsFile,
-					Charset.defaultCharset());
-			String ls = System.getProperty("line.separator");
-			Files.append(ls, resultsFile, Charset.defaultCharset());
+            result.getSetOfInterLinks().addAll(setNoInterlinks);
+            System.out.println("size of interlinks (after adding in theroy the set of not interlinks " + result.getSetOfInterLinks().size());
 
-			for (Mapping m : result.getSetOfMappings()) {
 
-				Files.append(
-						"Mapping: elem1: " + m.getElementA().getURI()
-								+ " elem2: " + m.getElementB().getURI()
-								+ " rel: " + m.getRelation(), resultsFile,
-						Charset.defaultCharset());
-				Files.append(ls, resultsFile, Charset.defaultCharset());
-			}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return result;
-
-	}
-
-	 */
 
 }

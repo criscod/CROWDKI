@@ -1,46 +1,40 @@
 package org.crowdsourcedinterlinking.model;
 
-import org.crowdsourcedinterlinking.util.ConfigurationManager;
-import org.crowdsourcedinterlinking.util.ObjectMapping;
 import org.crowdsourcedinterlinking.util.URIutils;
-
-import com.hp.hpl.jena.query.QueryExecution;
-import com.hp.hpl.jena.query.QueryExecutionFactory;
-import com.hp.hpl.jena.query.QuerySolution;
-import com.hp.hpl.jena.query.ResultSet;
-import com.hp.hpl.jena.rdf.model.Model;
-
+/**
+ * @author csarasua
+ */
 public class InterlinkIdentificationUnitDataEntryImpl extends UnitDataEntryImpl {
 
-	//I don´t use this class
-	
-	protected String elementA;
-	protected String elementB;
-	protected String relation;
-	
-	protected Dataset datasetA;
-	protected Dataset datasetB;
+    //I donï¿½t use this class
 
-	/*protected String commentA;
-	protected String commentB;	*/
-	protected String labelA;
-	protected String labelB;
+    protected String elementA;
+    protected String elementB;
+    protected String relation;
 
-	
-	//protected ObjectMapping oMap;  
+    protected Dataset datasetA;
+    protected Dataset datasetB;
 
-	public InterlinkIdentificationUnitDataEntryImpl(String elA, String elB,
-			Dataset dA, Dataset dB) {
-		this.elementA = elA;
-		this.elementB = elB;
+    /*protected String commentA;
+    protected String commentB;	*/
+    protected String labelA;
+    protected String labelB;
 
-		this.datasetA = dA;
-		this.datasetB = dB;
 
-		this.setGoldenUnit(false);
-		this.labelA = URIutils.getDefaultLabel(elA);
-		this.labelB = URIutils.getDefaultLabel(elB);
-		/*
+    //protected ObjectMapping oMap;
+
+    public InterlinkIdentificationUnitDataEntryImpl(String elA, String elB,
+                                                    Dataset dA, Dataset dB) {
+        this.elementA = elA;
+        this.elementB = elB;
+
+        this.datasetA = dA;
+        this.datasetB = dB;
+
+        this.setGoldenUnit(false);
+        this.labelA = URIutils.getDefaultLabel(elA);
+        this.labelB = URIutils.getDefaultLabel(elB);
+        /*
 
 		this.commentA = new String("not available");
 		this.commentB = new String("not available");
@@ -57,13 +51,13 @@ public class InterlinkIdentificationUnitDataEntryImpl extends UnitDataEntryImpl 
 					{
 						this.oMap = ObjectMapping.PROPERTIES;
 					}*/
-		
-	}
 
-	
-	public void loadInfo() {
+    }
 
-		// load commentsA and commentsB
+
+    public void loadInfo() {
+
+        // load commentsA and commentsB
 		/*try {
 			if (!this.isGoldenUnit()) {
 
@@ -139,99 +133,99 @@ public class InterlinkIdentificationUnitDataEntryImpl extends UnitDataEntryImpl 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}*/
-	}
+    }
 
-	public String getElementA() {
-		return elementA;
-	}
+    public String getElementA() {
+        return elementA;
+    }
 
-	public void setElementA(String elementA) {
-		this.elementA = elementA;
-	}
+    public void setElementA(String elementA) {
+        this.elementA = elementA;
+    }
 
-	public String getElementB() {
-		return elementB;
-	}
+    public String getElementB() {
+        return elementB;
+    }
 
-	public void setElementB(String elementB) {
-		this.elementB = elementB;
-	}
-	public String getRelation() {
-		return relation;
-	}
+    public void setElementB(String elementB) {
+        this.elementB = elementB;
+    }
 
-	public void setRelation(String relation) {
-		this.relation = relation;
-	}
+    public String getRelation() {
+        return relation;
+    }
 
-
-	public Dataset getDatasetA() {
-		return datasetA;
-	}
+    public void setRelation(String relation) {
+        this.relation = relation;
+    }
 
 
-	public void setDatasetA(Dataset datasetA) {
-		this.datasetA = datasetA;
-	}
+    public Dataset getDatasetA() {
+        return datasetA;
+    }
 
 
-	public Dataset getDatasetB() {
-		return datasetB;
-	}
+    public void setDatasetA(Dataset datasetA) {
+        this.datasetA = datasetA;
+    }
 
 
-	public void setDatasetB(Dataset datasetB) {
-		this.datasetB = datasetB;
-	}
+    public Dataset getDatasetB() {
+        return datasetB;
+    }
 
-	/*public String getCommentA() {
-		return commentA;
-	}
 
-	public void setCommentA(String commentA) {
-		this.commentA = commentA;
-	}
+    public void setDatasetB(Dataset datasetB) {
+        this.datasetB = datasetB;
+    }
 
-	public String getCommentB() {
-		return commentB;
-	}
+    /*public String getCommentA() {
+        return commentA;
+    }
 
-	public void setCommentB(String commentB) {
-		this.commentB = commentB;
-	}
+    public void setCommentA(String commentA) {
+        this.commentA = commentA;
+    }
 
-	public Ontology getOntologyA() {
-		return ontologyA;
-	}
+    public String getCommentB() {
+        return commentB;
+    }
 
-	public void setOntologyA(Ontology ontologyA) {
-		this.ontologyA = ontologyA;
-	}
+    public void setCommentB(String commentB) {
+        this.commentB = commentB;
+    }
 
-	public Ontology getOntologyB() {
-		return ontologyB;
-	}
+    public Ontology getOntologyA() {
+        return ontologyA;
+    }
 
-	public void setOntologyB(Ontology ontologyB) {
-		this.ontologyB = ontologyB;
-	}
-	*/
-	public String getLabelA() {
-		return labelA;
-	}
+    public void setOntologyA(Ontology ontologyA) {
+        this.ontologyA = ontologyA;
+    }
 
-	public void setLabelA(String labelA) {
-		this.labelA = labelA;
-	}
+    public Ontology getOntologyB() {
+        return ontologyB;
+    }
 
-	public String getLabelB() {
-		return labelB;
-	}
+    public void setOntologyB(Ontology ontologyB) {
+        this.ontologyB = ontologyB;
+    }
+    */
+    public String getLabelA() {
+        return labelA;
+    }
 
-	public void setLabelB(String labelB) {
-		this.labelB = labelB;
-	}
-	
-	
+    public void setLabelA(String labelA) {
+        this.labelA = labelA;
+    }
+
+    public String getLabelB() {
+        return labelB;
+    }
+
+    public void setLabelB(String labelB) {
+        this.labelB = labelB;
+    }
+
 
 }

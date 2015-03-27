@@ -10,87 +10,88 @@ import org.crowdsourcedinterlinking.util.ConfigurationManager;
 import org.crowdsourcedinterlinking.util.Time;
 
 import com.google.common.io.Files;
-
+/**
+ * @author csarasua
+ */
 public class InterlinkIdentificationJobMicrotaskImpl extends JobMicrotaskImpl {
 
-	protected boolean extended;
-	protected boolean turned;
+    protected boolean extended;
+    protected boolean turned;
 
-	
-	
-	public InterlinkIdentificationJobMicrotaskImpl(boolean extended,
-			boolean turned) {
-		this.extended = extended;
-		this.turned = turned;
-		
-		
-	}
 
-	// createCheckBoxPossibelAnswers if IDENTIFICATION A OR B THEN
+    public InterlinkIdentificationJobMicrotaskImpl(boolean extended,
+                                                   boolean turned) {
+        this.extended = extended;
+        this.turned = turned;
 
-	// en loadInfo hacer SI UNIT NO ES GOLDEN ENTONCES CARGAR LA INFO
-	public void serialiseUnitsIntoCVSFile() {
-		try {
-			UUID id = UUID.randomUUID();
-			this.pathOfCSVfile = ConfigurationManager.getInstance()
-					.getCsvIdentification() + id.toString() + ".csv";
-			File csvFile = new File(pathOfCSVfile);
-			System.out.println("file for CSV: " + csvFile.getAbsolutePath());
 
-			Files.write("A, B, DefinitionA, Definition B", csvFile,
-					Charset.defaultCharset());
-			String ls = System.getProperty("line.separator");
-			Files.append(ls, csvFile, Charset.defaultCharset());
+    }
 
-			MappingIdentificationUnitDataEntryImpl unit;
+    // createCheckBoxPossibelAnswers if IDENTIFICATION A OR B THEN
 
-			for (UnitDataEntryImpl u : this.setOfUnits) {
-				Files.append(ls, csvFile, Charset.defaultCharset());
-				unit = (MappingIdentificationUnitDataEntryImpl) u;
-				if (!unit.isGoldenUnit()) {
-					Files.append(unit.getLabelA(), csvFile,
-							Charset.defaultCharset());
-					Files.append(", ", csvFile, Charset.defaultCharset());
-					Files.append(unit.getLabelB(), csvFile,
-							Charset.defaultCharset());
-					Files.append(", ", csvFile, Charset.defaultCharset());
+    // en loadInfo hacer SI UNIT NO ES GOLDEN ENTONCES CARGAR LA INFO
+    public void serialiseUnitsIntoCVSFile() {
+        try {
+            UUID id = UUID.randomUUID();
+            this.pathOfCSVfile = ConfigurationManager.getInstance()
+                    .getCsvIdentification() + id.toString() + ".csv";
+            File csvFile = new File(pathOfCSVfile);
+            System.out.println("file for CSV: " + csvFile.getAbsolutePath());
 
-					Files.append(unit.getCommentA(), csvFile,
-							Charset.defaultCharset());
-					Files.append(", ", csvFile, Charset.defaultCharset());
-					Files.append(unit.getCommentB(), csvFile,
-							Charset.defaultCharset());
-					Files.append(", ", csvFile, Charset.defaultCharset());
-				} else // it is golden
-				{
-					Files.append(unit.getElementA(), csvFile,
-							Charset.defaultCharset());
-					Files.append(", ", csvFile, Charset.defaultCharset());
-					Files.append(unit.getElementB(), csvFile,
-							Charset.defaultCharset());
-					Files.append(", ", csvFile, Charset.defaultCharset());
+            Files.write("A, B, DefinitionA, Definition B", csvFile,
+                    Charset.defaultCharset());
+            String ls = System.getProperty("line.separator");
+            Files.append(ls, csvFile, Charset.defaultCharset());
 
-					// golden --> no comments
-					Files.append(" ", csvFile, Charset.defaultCharset());
-					Files.append(", ", csvFile, Charset.defaultCharset());
-					Files.append(" ", csvFile, Charset.defaultCharset());
-					Files.append(", ", csvFile, Charset.defaultCharset());
-				}
+            MappingIdentificationUnitDataEntryImpl unit;
 
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+            for (UnitDataEntryImpl u : this.setOfUnits) {
+                Files.append(ls, csvFile, Charset.defaultCharset());
+                unit = (MappingIdentificationUnitDataEntryImpl) u;
+                if (!unit.isGoldenUnit()) {
+                    Files.append(unit.getLabelA(), csvFile,
+                            Charset.defaultCharset());
+                    Files.append(", ", csvFile, Charset.defaultCharset());
+                    Files.append(unit.getLabelB(), csvFile,
+                            Charset.defaultCharset());
+                    Files.append(", ", csvFile, Charset.defaultCharset());
 
-	}
+                    Files.append(unit.getCommentA(), csvFile,
+                            Charset.defaultCharset());
+                    Files.append(", ", csvFile, Charset.defaultCharset());
+                    Files.append(unit.getCommentB(), csvFile,
+                            Charset.defaultCharset());
+                    Files.append(", ", csvFile, Charset.defaultCharset());
+                } else // it is golden
+                {
+                    Files.append(unit.getElementA(), csvFile,
+                            Charset.defaultCharset());
+                    Files.append(", ", csvFile, Charset.defaultCharset());
+                    Files.append(unit.getElementB(), csvFile,
+                            Charset.defaultCharset());
+                    Files.append(", ", csvFile, Charset.defaultCharset());
 
-	public void createUI() {
-		try {
-			String cmlCode = new String();
-			File cmlFile = null;
+                    // golden --> no comments
+                    Files.append(" ", csvFile, Charset.defaultCharset());
+                    Files.append(", ", csvFile, Charset.defaultCharset());
+                    Files.append(" ", csvFile, Charset.defaultCharset());
+                    Files.append(", ", csvFile, Charset.defaultCharset());
+                }
 
-			//not needed anymore without context
-			/*if (this.extended) {
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void createUI() {
+        try {
+            String cmlCode = new String();
+            File cmlFile = null;
+
+            //not needed anymore without context
+            /*if (this.extended) {
 				// identification A
 				if (!turned) {
 					cmlFile = new File(ConfigurationManager.getInstance()
@@ -119,18 +120,18 @@ public class InterlinkIdentificationJobMicrotaskImpl extends JobMicrotaskImpl {
 
 			}
 			this.setCml(cmlCode);*/
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-	}
+    }
 
-	public boolean isExtended() {
-		return extended;
-	}
+    public boolean isExtended() {
+        return extended;
+    }
 
-	public void setExtended(boolean extended) {
-		this.extended = extended;
-	}
+    public void setExtended(boolean extended) {
+        this.extended = extended;
+    }
 
 }

@@ -1,0 +1,259 @@
+<h3><strong>Overview</strong></h3>
+  
+In this job, you will identify if the two descriptions of persons that we provide are referring to actually the same person.  You need to compare all the information provided: name, surname, age, date of birth, id, phone and address postcode, and decide whether the two descriptions are talking about the same person or not. 
+
+<b> Important: </b>
+Sometimes, descriptions might be incomplete (e.g. one description is missing the age). Some other times, the data in the description might seem incoherent (e.g. you could find a case in which the age of 02 is being compared to the age of 20, simply because the description originally contained some typos). This is normal, first, because the descriptions may come from different sources, and second, because the data by nature needs a manual quality check. That is why we need you. If you look at all the pieces of information of the descriptions you should be able to reach the decision on whether the two descriptions refer to the same person or not. 
+
+With your answers, you make us understand how this kind of information should be compared and connected. The information that will be gathered here (i.e. your answers) will be used to enhance the methods we use for integrating information coming from different open sources. These methods become very useful when for instance, someone is creating an app that shows Web users similar information that has been written differently on the Web!
+
+All the data that you will see and review has been openly released by an initiative, which encourages computer scientists to create methods to connect information . We are not leaking any personal information. 
+
+
+<!-- 
+  hr: This designinates a thematic break in your content. It should be used when switching from one topic to a new topic. This renders as a thin horizontal line breaking up sections in modern browsers. This tag does not require a closing </hr> tag.
+-->
+<hr>
+
+<!--
+  ol, ul and li: These are all tags used for crafting HTML lists. <ol> creates an ordered list, elements in this list will be numbered. <ul> creates and unordered list, elements in this list will be bullet pointed. Inside of each <ol> or <ul> tag, you will use the <li> tag to designate each item of the list. Ex: <ol> <li>Item 1</li> <li>Item 2</li> </ol>
+  Underlining: You can underline text with the tag <u>. This tag must be wrapped around the text you want underlined. Ex: <u>underline this</u>
+-->
+
+<h3><strong>Process</strong></h3>
+
+<!-- BEGIN CUSTOMIZABLE PROCESS SECTION -->
+
+Follow these easy steps:   
+<ol>
+  <li> Read the two descriptions that we provide  </li>
+<ul>  
+<li> If you think they <b> DO  refer to the same person</b>  then go to the first question of the form and select the option that says <u> yes </u>. </li>
+  <li> If you think they <b> DO NOT refer to the same person</b>  then go to the first question of the form and select the option that says  <u> no </u>. </li>
+</ul>
+  <li> Answer the second question, by selecting the description you are asked on.  It can be either the description of the first person (labeled for example as 'person1-Person4340') or the description of the second person (labeled for example as 'person2-Person6543')</li>
+</ol>  
+
+<!-- END CUSTOMIZABLE PROCESS SECTION -->
+
+<hr>
+
+<h3><strong>Rules and Tips</strong></h3>
+<!-- BEGIN CUSTOMIZABLE RULES AND TIPS SECTION -->
+<!-- BEGIN DO THIS SECTION -->
+<h4 style="color:#8cc63e;"><strong>Do This</strong></h4>
+
+Read and compare all pieces of information of both descriptions.
+
+<br>
+<!-- END DO THIS SECTION -->
+
+<!-- BEGIN BE CAREFUL SECTION -->
+<h4 style="color:#ffcb02;"><strong>Be Careful Of</strong></h4>
+
+Be careful and do not focus only on the first piece information that you read (e.g. name) because there might be different persons who share the same name and even surname! And you could also find two descriptions of the same person where the name and surname have been written slightly different (e.g. some people change their surnames when they get married). 
+
+<br>
+
+<!--END BE CAREFUL SECTION -->
+
+<!-- BEGIN DO NOT SECTION -->
+<h4 style="color:#f05921;"><strong>Do Not</strong></h4>
+
+Please do not look for equal values in all the pieces information (i.e. in all features from name to postal code) and decide that the descriptions talk about the same person only when all values match. The goal of the task is not to find perfect matches, but instead, to be able to identify descriptions that even if they do not match perfectly, you can deduce from the whole overview that they are about the same person. 
+
+
+<!--END DO NOT SECTION -->
+
+<!-- END CUSTOMIZABLE TIPS SECTION -->
+
+<hr>
+
+<h3><strong>Examples</strong></h3>
+<!-- BEGIN CUSTOMIZABLE EXAMPLES SECTION -->
+
+<!-- BEGIN EXAMPLE 1 -->
+<h4><u>Example 1 </u></h4>
+
+<b>Description Person 1</b>
+
+<table style="width:100%">
+<tr>
+    <td><b>Description 1: person1-Person9999</b></td>
+    <td><b>Description 2: person2-Person3333</b></td> 
+  </tr>
+  <tr>
+    <td>name: peter p.</td>
+    <td>name: peter </td> 
+  </tr>
+   <tr>
+    <td>surname: smith</td>
+    <td>surname: smith</td> 
+  </tr>
+ <tr>
+    <td>age: 29 </td>
+    <td>age: 29</td> 
+  </tr>
+ <tr>
+    <td>date of birth: 19850203</td>
+    <td>date of birth: 19850302</td> 
+  </tr>
+ <tr>
+    <td>socsecid: 76543</td>
+    <td>socsecid: 76543</td> 
+  </tr>
+ <tr>
+    <td>phone:398277</td>
+    <td>phone:9752777</td> 
+  </tr>
+ <tr>
+    <td>address.postcode: 3567</td>
+    <td>address.postcode: 3567</td> 
+  </tr>
+</table>
+
+<p><i> These two description DO refer to the same person. Note that the two persons share name, address postal code and id. The birthday values are different but given the fact that the data might contain errors and the purpose is to clean it, we can consider that the descriptions refer to the same person. </i></p>
+<!-- END EXAMPLE 1 -->
+
+<!-- BEGIN EXAMPLE 2 -->
+<h4><u>Example 2 </u></h4>
+
+
+
+<table style="width:100%">
+<tr>
+    <td><b>Description 1: person1-Person3456</b></td>
+    <td><b>Description 2: person2-Person2345</b></td> 
+  </tr>
+  <tr>
+    <td>name: peter</td>
+    <td>name: peter</td> 
+  </tr>
+   <tr>
+    <td>surname: sailor</td>
+    <td>surname: smith</td> 
+  </tr>
+ <tr>
+    <td>age: '' </td>
+    <td>age: '' </td> 
+  </tr>
+ <tr>
+    <td>date of birth: 19750203</td>
+    <td>date of birth: 19750203</td> 
+  </tr>
+ <tr>
+    <td>socsecid: 3982716</td>
+    <td>socsecid: 3982717</td> 
+  </tr>
+ <tr>
+    <td>phone:3982673</td>
+    <td>phone:9752762</td> 
+  </tr>
+ <tr>
+    <td>address.postcode: 3567</td>
+    <td>address.postcode: 9876</td> 
+  </tr>
+</table>
+<p><i> These two description DO NOT refer to the same person. Note that even if the two persons have the same date of bith, the two persons have different names, ids and address postal codes. </i></p>
+<!-- END EXAMPLE 2 -->
+
+<!-- BEGIN EXAMPLE 3 -->
+<h4><u>Example 3 </u></h4>
+
+
+
+<table style="width:100%">
+<tr>
+    <td><b>Description 1: person1-Person3456</b></td>
+    <td><b>Description 2: person2-Person2345</b></td> 
+  </tr>
+  <tr>
+    <td>name: p. john</td>
+    <td>name: p. john</td> 
+  </tr>
+   <tr>
+    <td>surname: smith</td>
+    <td>surname: smith</td> 
+  </tr>
+ <tr>
+    <td>age: '' </td>
+    <td>age: '' </td> 
+  </tr>
+ <tr>
+    <td>date of birth: 19760203</td>
+    <td>date of birth: 19750203</td> 
+  </tr>
+ <tr>
+    <td>socsecid: 3982725</td>
+    <td>socsecid: 3982716</td> 
+  </tr>
+ <tr>
+    <td>phone:3982679</td>
+    <td>phone:9752788</td> 
+  </tr>
+ <tr>
+    <td>address.postcode: 3567</td>
+    <td>address.postcode: 9876</td> 
+  </tr>
+</table>
+
+<p> <i>These two description DO NOT refer to the same person. Note that the two persons share name, but have different id, birthday and address postal code. </i> </p>
+<!-- END EXAMPLE 3 -->
+
+
+<!-- BEGIN EXAMPLE 4 -->
+<h4><u>Example 4 </u></h4>
+
+
+
+<table style="width:100%">
+<tr>
+    <td><b>Description 1: person1-Person3456</b></td>
+    <td><b>Description 2: person2-Person2345</b></td> 
+  </tr>
+  <tr>
+    <td>name: p. paul</td>
+    <td>name: p. p.</td> 
+  </tr>
+   <tr>
+    <td>surname: smith</td>
+    <td>surname: smith</td> 
+  </tr>
+ <tr>
+    <td>age: '' </td>
+    <td>age: '' </td> 
+  </tr>
+ <tr>
+    <td>date of birth: 19750203</td>
+    <td>date of birth: 19750203</td> 
+  </tr>
+ <tr>
+    <td>socsecid: 3982716</td>
+    <td>socsecid: 3982716</td> 
+  </tr>
+ <tr>
+    <td>phone:3982679</td>
+    <td>phone:9752788</td> 
+  </tr>
+ <tr>
+    <td>address.postcode: 3567</td>
+    <td>address.postcode: 9876</td> 
+  </tr>
+</table>
+
+<p><i> These two description DO refer to the same person. Note that the two descriptions share the id and birthday, and the names might be the same (one of the values is in an abbreviated form). The person might have moved to a different place, therefore the phone and address details can be different.</i> </p>
+<!-- END EXAMPLE 3 -->
+<!-- END CUSTOMIZABLE EXAMPLES SECTION -->
+
+<hr>
+
+<h3><strong>Thank You!</strong></h3>
+
+<!-- BEGIN CUSTOMIZABLE THANK YOU SECTION -->
+
+Thank you so much for your work! You are helping us a lot. 
+
+This job has been published by researchers at the Institute for Web Science and Technologies (WeST) - University of Koblenz-Landau.
+
+In order to enable reproducibility in research we will publish the responses you provide to the questions in the form, as they provide valuable knowledge for algorithms and computer scientists. We intend to publish the crowdsourced responses without revealing any personal information. The collected answers will be anonymized.
+

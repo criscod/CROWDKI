@@ -11,21 +11,19 @@ import java.util.Set;
 public class InterlinkingChoices {
 
     Set<InterlinkingChoice> choices;
-    Map<String,DatasetDescription> datasetDescriptions;
+    Map<String, DatasetDescription> datasetDescriptions;
 
-    public InterlinkingChoices()
-    {
+    public InterlinkingChoices() {
         this.choices = new HashSet<InterlinkingChoice>();
-        this.datasetDescriptions = new HashMap<String,DatasetDescription>();
+        this.datasetDescriptions = new HashMap<String, DatasetDescription>();
     }
 
-    public void addChoice(InterlinkingChoice choice)
-    {
+    public void addChoice(InterlinkingChoice choice) {
         this.choices.add(choice);
     }
-    public void addDatasetDescription(DatasetDescription desc)
-    {
-        this.datasetDescriptions.put(desc.getDatasetId(),desc);
+
+    public void addDatasetDescription(DatasetDescription desc) {
+        this.datasetDescriptions.put(desc.getDatasetId(), desc);
     }
 
     public Set<InterlinkingChoice> getChoices() {

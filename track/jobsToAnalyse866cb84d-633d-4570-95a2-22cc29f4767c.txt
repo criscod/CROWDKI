@@ -1,0 +1,2 @@
+person11,datasets/person11.rdf,FILEDUMP
+person12,datasets/person12.rdf,FILEDUMP

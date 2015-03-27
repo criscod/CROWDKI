@@ -1,222 +1,253 @@
 package org.crowdsourcedinterlinking.model;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.hp.hpl.jena.rdf.model.ResIterator;
+import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.sdb.SDBFactory;
 import com.hp.hpl.jena.sdb.Store;
 import com.hp.hpl.jena.util.FileManager;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.HashSet;
+import java.util.Set;
+/**
+ * @author csarasua
+ */
 public class Dataset {
 
-	private String title;
-	private TypeOfDatasetLocation typeOfLocation;
-	private String location; // can be the Path of a file or a SPARQL endpoint -
-								// distinguished by file:/// if local otherwise
-								// add tyoe of location
+    private String title;
+    private TypeOfDatasetLocation typeOfLocation;
+    private String location; // can be the Path of a file or a SPARQL endpoint -
+    // distinguished by file:/// if local otherwise
+    // add tyoe of location
 
-	private String uriSpace;
-	private String vocabulary; //locator
-	private String nameSpace;
-	
-	private Model model;
-	
+    private String uriSpace;
+    private String vocabulary; //locator
+    private String nameSpace;
 
-	public Dataset(String title, TypeOfDatasetLocation typeLoc,
-			String loc, String uriSpa, String vocab, String ns) {
-		try {
+    private Model model;
 
-			this.title = title;
-			this.typeOfLocation = typeLoc;
-			this.location = loc;
-			this.uriSpace = uriSpa;
-			this.vocabulary = vocab;
-			this.nameSpace = ns;
 
-			
-			
-			
-			Model vocabularyModel = ModelFactory.createDefaultModel();
-			// Load the input data set into a model(file-based or DB-backend) only if it is a File, otherwise the queries are executed against the SPARQL Endpoint
+    public Dataset(String title, TypeOfDatasetLocation typeLoc,
+                   String loc, String uriSpa, String vocab, String ns) {
+        try {
 
-			if (this.typeOfLocation.equals(TypeOfDatasetLocation.FILEDUMP)) {
+            this.title = title;
+            this.typeOfLocation = typeLoc;
+            this.location = loc;
+            this.uriSpace = uriSpa;
+            this.vocabulary = vocab;
+            this.nameSpace = ns;
 
-				this.model = ModelFactory.createDefaultModel();
-				
-				File f = new File(location);
-				long length = f.length();
 
-				if (length < 5000000) {
+            Model vocabularyModel = ModelFactory.createDefaultModel();
+            // Load the input data set into a model(file-based or DB-backend) only if it is a File, otherwise the queries are executed against the SPARQL Endpoint
 
-					//The data set dump file can be imported to an in-memory model
+            if (this.typeOfLocation.equals(TypeOfDatasetLocation.FILEDUMP)) {
 
-					if (location.startsWith("http://")) {
-						model.read(location);
-					} else {
+                this.model = ModelFactory.createDefaultModel();
 
-						// model.read("file:///" + location);
+                File f = new File(location);
+                long length = f.length();
 
-						InputStream in = new FileInputStream(location);
-						in = new BufferedInputStream(in);
+                if (length < 5000000) {
 
-						
-						model.read(in, null); 
+                    //The data set dump file can be imported to an in-memory model
 
-					}
+                    if (location.startsWith("http://")) {
+                        model.read(location);
+                    } else {
 
-				} else {
-					
-					//The data set dump file is too big to handle it in an in-meomry model, therefore it is stored in a database - TO REVISE (From ontology)
+                        // model.read("file:///" + location);
 
-					Store store = com.hp.hpl.jena.sdb.SDBFactory
-							.connectStore("file:///C:/Users/csarasua/workspace_PHD/CrowdMAP-CrowdLINK/sdb.ttl");
+                        InputStream in = new FileInputStream(location);
+                        in = new BufferedInputStream(in);
 
-					if (store != null) {
 
-						model = SDBFactory.connectDefaultModel(store);
-						// Dataset ds = SDBFactory.connectDataset(store);
+                        model.read(in, null);
+
+                    }
+
+                } else {
+
+                    //The data set dump file is too big to handle it in an in-meomry model, therefore it is stored in a database - TO REVISE (From ontology)
+
+                    Store store = com.hp.hpl.jena.sdb.SDBFactory
+                            .connectStore("file:///C:/Users/csarasua/workspace_PHD/CrowdMAP-CrowdLINK/sdb.ttl");
+
+                    if (store != null) {
+
+                        model = SDBFactory.connectDefaultModel(store);
+                        // Dataset ds = SDBFactory.connectDataset(store);
 
 						/*
-						 * only first time */
-						 InputStream in = FileManager.get().open(location); model.read(in, "");
-						 
-
-						// ds.getDefaultModel().add(model.read(in, ""));
-					}
-
-					store.close();
-
-					// Store store =
-					// com.hp.hpl.jena.sdb.SDBFactory.connectStore("file:///C:/Users/csarasua/workspace_PHD/ISWC2012experiment/sdb.ttl");
-					//
-					//
-					//
-					// if (store != null) {
-					//
-					// model = SDBFactory.connectDefaultModel(store);
-					// Dataset ds = SDBFactory.connectDataset(store);
-					//
-					// InputStream in = FileManager.get().open(location);
-					//
-					// model.read(in, "");
-					// // ds.getDefaultModel().add(model.read(in, ""));
-					// }
-					//
-					// store.close();
-
-					// Store store =
-					// StoreFactory.create("file:///C:/Users/csarasua/workspace_PHD/ISWC2012experiment/sdb.ttl")
-					// ;
-					// Model model = SDBFactory.connectDefaultModel(store) ;
-					//
-					// StmtIterator sIter = model.listStatements() ;
-					// for ( ; sIter.hasNext() ; )
-					// {
-					// Statement stmt = sIter.nextStatement() ;
-					// System.out.println(stmt) ;
-					// }
-					// sIter.close() ;
-					// store.close() ;
-				}
-
-			}
-			
-			//load the vocabulary -- should be done like ebfore if too big store it in Db
-			
-			if (vocabulary!=null)
-			{
-			if (vocabulary.startsWith("http://")) {
-				vocabularyModel.read(vocabulary);
-			} else {
-
-				// model.read("file:///" + location);
-
-				InputStream in = new FileInputStream(vocabulary);
-				in = new BufferedInputStream(in);
-
-				
-				vocabularyModel.read(in, null); 
-
-			}
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+                         * only first time */
+                        InputStream in = FileManager.get().open(location);
+                        model.read(in, "");
 
 
-	public String getTitle() {
-		return title;
-	}
+                        // ds.getDefaultModel().add(model.read(in, ""));
+                    }
+
+                    store.close();
+
+                    // Store store =
+                    // com.hp.hpl.jena.sdb.SDBFactory.connectStore("file:///C:/Users/csarasua/workspace_PHD/ISWC2012experiment/sdb.ttl");
+                    //
+                    //
+                    //
+                    // if (store != null) {
+                    //
+                    // model = SDBFactory.connectDefaultModel(store);
+                    // Dataset ds = SDBFactory.connectDataset(store);
+                    //
+                    // InputStream in = FileManager.get().open(location);
+                    //
+                    // model.read(in, "");
+                    // // ds.getDefaultModel().add(model.read(in, ""));
+                    // }
+                    //
+                    // store.close();
+
+                    // Store store =
+                    // StoreFactory.create("file:///C:/Users/csarasua/workspace_PHD/ISWC2012experiment/sdb.ttl")
+                    // ;
+                    // Model model = SDBFactory.connectDefaultModel(store) ;
+                    //
+                    // StmtIterator sIter = model.listStatements() ;
+                    // for ( ; sIter.hasNext() ; )
+                    // {
+                    // Statement stmt = sIter.nextStatement() ;
+                    // System.out.println(stmt) ;
+                    // }
+                    // sIter.close() ;
+                    // store.close() ;
+                }
+
+            }
+
+            //load the vocabulary -- should be done like ebfore if too big store it in Db
+
+            if (vocabulary != null) {
+                if (vocabulary.startsWith("http://")) {
+                    vocabularyModel.read(vocabulary);
+                } else {
+
+                    // model.read("file:///" + location);
+
+                    InputStream in = new FileInputStream(vocabulary);
+                    in = new BufferedInputStream(in);
 
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+                    vocabularyModel.read(in, null);
+
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 
-	public TypeOfDatasetLocation getTypeOfLocation() {
-		return typeOfLocation;
-	}
+    public String getTitle() {
+        return title;
+    }
 
 
-	public void setTypeOfLocation(TypeOfDatasetLocation typeOfLocation) {
-		this.typeOfLocation = typeOfLocation;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
 
-	public String getLocation() {
-		return location;
-	}
+    public TypeOfDatasetLocation getTypeOfLocation() {
+        return typeOfLocation;
+    }
 
 
-	public void setLocation(String location) {
-		this.location = location;
-	}
+    public void setTypeOfLocation(TypeOfDatasetLocation typeOfLocation) {
+        this.typeOfLocation = typeOfLocation;
+    }
 
 
-	public String getUriSpace() {
-		return uriSpace;
-	}
+    public String getLocation() {
+        return location;
+    }
 
 
-	public void setUriSpace(String uriSpace) {
-		this.uriSpace = uriSpace;
-	}
+    public void setLocation(String location) {
+        this.location = location;
+    }
 
 
-	public String getVocabulary() {
-		return vocabulary;
-	}
+    public String getUriSpace() {
+        return uriSpace;
+    }
 
 
-	public void setVocabulary(String vocabulary) {
-		this.vocabulary = vocabulary;
-	}
+    public void setUriSpace(String uriSpace) {
+        this.uriSpace = uriSpace;
+    }
 
 
-	public String getNameSpace() {
-		return nameSpace;
-	}
+    public String getVocabulary() {
+        return vocabulary;
+    }
 
 
-	public void setNameSpace(String nameSpace) {
-		this.nameSpace = nameSpace;
-	}
+    public void setVocabulary(String vocabulary) {
+        this.vocabulary = vocabulary;
+    }
 
 
-	public Model getModel() {
-		return model;
-	}
+    public String getNameSpace() {
+        return nameSpace;
+    }
 
 
-	public void setModel(Model model) {
-		this.model = model;
-	}
+    public void setNameSpace(String nameSpace) {
+        this.nameSpace = nameSpace;
+    }
 
+
+    public Model getModel() {
+        return model;
+    }
+
+
+    public void setModel(Model model) {
+        this.model = model;
+    }
+
+    public Set<Resource> listResourcesToBeLinked() {
+        //could chek pay level domain
+        Set<Resource> setOfInstances = new HashSet<Resource>();
+
+        try {
+
+
+            ResIterator subjects = this.model.listSubjects();
+            while (subjects.hasNext()) {
+                Resource resI = subjects.nextResource();
+
+                if (resI.getURI() != null) {
+                    setOfInstances.add(resI);
+                }
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        for (Resource res : setOfInstances) {
+            System.out.println(res.getURI());
+        }
+
+        return setOfInstances;
+    }
 }

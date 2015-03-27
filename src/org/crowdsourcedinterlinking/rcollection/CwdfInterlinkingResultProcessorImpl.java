@@ -1,83 +1,64 @@
 package org.crowdsourcedinterlinking.rcollection;
 
-import com.hp.hpl.jena.datatypes.xsd.XSDDatatype;
+import com.google.common.io.Files;
 import com.hp.hpl.jena.rdf.model.*;
-import com.hp.hpl.jena.vocabulary.RDF;
 import org.crowdsourcedinterlinking.model.Dataset;
 import org.crowdsourcedinterlinking.model.Interlink;
 import org.crowdsourcedinterlinking.model.Interlinking;
 import org.crowdsourcedinterlinking.util.ConfigurationManager;
-import org.crowdsourcedinterlinking.util.Constants;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.Set;
-
+/**
+ * @author csarasua
+ */
 public class CwdfInterlinkingResultProcessorImpl implements InterlinkingResultProcessor {
 
-	/*
-	 * public CwdfResultProcessorImpl(Alignment crowdAlign) {
-	 * this.crowdAlignment = crowdAlign; }
-	 */
 
-	// to be deleted
-	/*
-	 * public CwdfResultProcessorImpl (Ontology oA, Ontology oB) {
-	 * 
-	 * Set<Mapping> setOfMappings=new HashSet<Mapping>();
-	 * 
-	 * this.crowdAlignment = new Alignment(oA, oB, setOfMappings); }
-	 */
+    public CwdfInterlinkingResultProcessorImpl() {
 
-	public CwdfInterlinkingResultProcessorImpl() {
+    }
 
-	}
-
-    public void serialiseInterlinkingToNTriples(Interlinking crowdInterlinking)
-    {
-        Model model = ModelFactory.createDefaultModel();
+    public void serialiseInterlinkingToNTriples(Interlinking crowdInterlinking) {
         Dataset d1 = crowdInterlinking.getDataset1();
-        Resource d1Resource = model.createResource(d1.getUriSpace());
         Dataset d2 = crowdInterlinking.getDataset2();
-        Resource d2Resource = model.createResource(d2.getUriSpace());
-        Set<Interlink> setOfMapCells = crowdInterlinking.getSetOfInterLinks();
 
         Model crowdModel = ModelFactory.createDefaultModel();
 
         Set<Interlink> setOfLinks = crowdInterlinking.getSetOfInterLinks();
 
         // File f = new File(confManager.getAlignmentResultFile());
-        File f = new File(ConfigurationManager.getInstance()
-                .getCrowdAlignmentsDirectory()
+        File f = new File(ConfigurationManager.getInstance().getCrowdInterlinkingsDirectory()
                 + ConfigurationManager.getInstance().getCrowdBaseFileName()
-                +d1.getTitle() + d2.getTitle() + ".rdf");
+                + d1.getTitle() + d2.getTitle() + ".rdf");
+        f.delete();
+        String ls = System.getProperty("line.separator");
 
-        for(Interlink i: setOfLinks)
-        {
-            Resource r1 = crowdModel.createResource(i.getElementA());
-            Resource r2 = crowdModel.createResource(i.getElementB());
+
+        for (Interlink i : setOfLinks) {
+            Resource r1 = crowdModel.createResource(i.getElementA().getURI());
+            Resource r2 = crowdModel.createResource(i.getElementB().getURI());
             Property p = crowdModel.createProperty(i.getRelation().getURI());
-            Statement st =crowdModel.createStatement(r1,p,r2);
+            Statement st = crowdModel.createStatement(r1, p, r2);
             crowdModel.add(st);
+            String ntriplesLine = "<" + r1.getURI() + "> <" + p.getURI() + "> <" + r2.getURI() + "> .";
+
+            try {
+                Files.append(ntriplesLine, f, Charset.defaultCharset());
+                Files.append(ls, f, Charset.defaultCharset());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
-
-        OutputStream out = null;
-        try {
-            out = new FileOutputStream(f);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        PrintWriter writer = new PrintWriter(new OutputStreamWriter(out));
-        writer.flush();
-
-        model.write(writer, "N-Triples");
-
-        writer.close();
 
 
     }
 
-	public void serialiseSelectedAlignmentToAlignmentAPIFormat(
+	/*
+    public void serialiseSelectedAlignmentToAlignmentAPIFormat(
 			Interlinking crowdAlignment) {
 
 		try {
@@ -86,7 +67,6 @@ public class CwdfInterlinkingResultProcessorImpl implements InterlinkingResultPr
 					true);
 			model.setNsPrefix("", Constants.NS_ALIGN);
 
-			// model.setNsPrefix(null, Constants.NS_ALIGN);
 
 			Dataset onto1 = crowdAlignment.getDataset1();
 			Resource onto1Resource = model.createResource(onto1.getUriSpace());
@@ -181,10 +161,7 @@ public class CwdfInterlinkingResultProcessorImpl implements InterlinkingResultPr
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 
-	public void deleteJob() {
-
-	}
 
 }

@@ -13,8 +13,8 @@ import java.util.UUID;
 
 /**
  * @author csarasua
- * Class to handle all the process related to generating and
- * publishing microtasks for assessing the relevance of interlinking choices
+ *         Class to handle all the process related to generating and
+ *         publishing microtasks for assessing the relevance of interlinking choices
  */
 public class RelInterlinkingMicrotaskManager {
 
@@ -30,7 +30,7 @@ public class RelInterlinkingMicrotaskManager {
 
 
     public RelInterlinkingMicrotaskManager(InterlinkingChoicesGenerator choicesGen,
-                                        RelInterlinkingChoicesMicrotaskGenerator microtaskGen, MicrotaskPublisher microtaskPub) {
+                                           RelInterlinkingChoicesMicrotaskGenerator microtaskGen, MicrotaskPublisher microtaskPub) {
         this.choicesGenerator = choicesGen;
         this.microtaskGenerator = microtaskGen;
         this.microtaskPublisher = microtaskPub;
@@ -42,20 +42,18 @@ public class RelInterlinkingMicrotaskManager {
     }
 
 
-
     public void prepareListOfRelInterlinkingChoicesMicrotasks() {
         try {
 
             this.interlinkingChoices = this.choicesGenerator.generateChoices();
-System.out.println("trace");
-            this.setOfMicrotasks = this.microtaskGenerator.createMicrotasks(this.interlinkingChoices );
+            System.out.println("trace");
+            this.setOfMicrotasks = this.microtaskGenerator.createMicrotasks(this.interlinkingChoices);
             this.uploadMicrotasksToCwdf();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
-
 
 
     public void uploadMicrotasksToCwdf() {
