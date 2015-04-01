@@ -10,6 +10,7 @@ import java.util.*;
 
 /**
  * @author csarasua
+ * Class for generating all the microtasks of type interlinking validations within CrowdFlower. It handles the gold unit generation, the creation of microtask instances containing the candidate links to review.
  */
 public class CwdfInterlinkingMicrotaskGeneratorImpl implements InterlinkingMicrotaskGenerator {
 
@@ -27,7 +28,10 @@ public class CwdfInterlinkingMicrotaskGeneratorImpl implements InterlinkingMicro
     private int numberOfJobs;
     // because it is necessary to know the real units in each job -- there are
     // jobs with less units
+
+    //Jobs have gold units (links) and real units (links)
     private int numberOfRealUnitsOfJob;
+    //CrowdFlower calls assignment or page to the group of microtasks that may appear at once (in one page).
     private int numberOfAssignmentsInJob;
 
     private int lastAvailableIndex = 0;
@@ -87,6 +91,7 @@ public class CwdfInterlinkingMicrotaskGeneratorImpl implements InterlinkingMicro
 			 */
 
             List<Interlink> interlinks = null;
+            //to force that links are parsed in a particular order
             if (ConfigurationManager.getInstance().getLinksInOrder().equals(ParseLinksInOrder.Lists)) {
                 interlinks = new ArrayList<Interlink>(
                         this.candidateInterlinking.getOrderedListOfInterlinks());
@@ -97,30 +102,17 @@ public class CwdfInterlinkingMicrotaskGeneratorImpl implements InterlinkingMicro
 
 
             int sizeOfSetOfInterlinks = interlinks.size();
-            // (int) Math.ceil(sizeOfSetOfMappings /..)
 
-            // ConfigurationManager.getInstance().getBatch()*ConfigurationManager.getInstance().getUnitsPerAssignment()
-
-            // this method will calcultae & store this.numberOfJobs and
-            // this.numberOfMinimuGold in the object
-            // calculateMinimumGold(sizeOfSetOfMappings,
-            // ConfigurationManager.getInstance().getUnitsPerAssignment());
-
-            // this.numberOfJobs = (int)(sizeOfSetOfMappings /
-            // ConfigurationManager.getInstance().getBatch()*(ConfigurationManager.getInstance().getUnitsPerAssignment()-1));
-            // this.numberOfJobs = this.numberOfJobs +1; //lo hab�a quitado ????
             int realUnitsPerAssignment = ConfigurationManager.getInstance()
                     .getUnitsPerAssignment();
             int normalUnitsPerAssignment = realUnitsPerAssignment
                     - ConfigurationManager.getInstance().getGoldPerAssignment();
 
-            // it should be -1 ?
-            // this.numberOfJobs = (int) (sizeOfSetOfMappings /
-            // (ConfigurationManager.getInstance().getBatch()*normalUnitsPerAssignment));
+            // number of jobs that we need to create, taking into account the limit that we set for the size of jobs (in batches or pages).
             this.numberOfJobs = (int) (sizeOfSetOfInterlinks / (ConfigurationManager.getInstance().getBatch() * normalUnitsPerAssignment));
             numberOfJobs = numberOfJobs + 1;
 
-            // TEST?-------
+
 
             System.out
                     .println("number of Jobs to create: " + this.numberOfJobs);
@@ -128,34 +120,14 @@ public class CwdfInterlinkingMicrotaskGeneratorImpl implements InterlinkingMicro
                     + ConfigurationManager.getInstance().getBatch()
                     + " sizeInterlinks: " + sizeOfSetOfInterlinks);
 
-            //TODO: refactor and update now changed due to requisite of links in order - split
+            //TODO: refactor and update
             //Set<UnitDataEntryImpl> setOfUnits = new HashSet<UnitDataEntryImpl>();
             List<UnitDataEntryImpl> listOfUnits = new ArrayList<UnitDataEntryImpl>();
             Set<UnitDataEntryImpl> goldenUnits = new HashSet<UnitDataEntryImpl>();
 
 
-            // int unitsPerJob =
-            // (int)(ConfigurationManager.getInstance().getBatch()*(this.realUnitsPerAssignment-1));
 
 
-            //max. 50 pages per job - 50 pages per #units per page (4) = 200
-
-
-			/*
-			int totalAssignments = (int)sizeOfSetOfInterlinks / normalUnitsPerAssignment;
-			int maxAssignmentsPerJobPossible = totalAssignments / 2;
-			if (maxAssignmentsPerJobPossible <= ConfigurationManager.getInstance().getBatch())
-			{
-				unitsPerJob = maxAssignmentsPerJobPossible * (ConfigurationManager.getInstance()
-						.getUnitsPerAssignment() - ConfigurationManager.getInstance().getGoldPerAssignment());
-			}
-			else {
-
-				unitsPerJob = (int) (ConfigurationManager.getInstance()
-						.getBatch() * (ConfigurationManager.getInstance()
-						.getUnitsPerAssignment() - ConfigurationManager.getInstance().getGoldPerAssignment()));
-			}
-			*/
 
             int unitsPerJob = (int) (ConfigurationManager.getInstance()
                     .getBatch() * (ConfigurationManager.getInstance()
@@ -169,24 +141,13 @@ public class CwdfInterlinkingMicrotaskGeneratorImpl implements InterlinkingMicro
 
             int minIndex = 0;
             int maxIndex = 0;
-            // while (job <=numberOfJobs){
+
             for (int job = 1; maxIndex < interlinks.size() - 1; job++) {
 
                 // create jobs with related units inside based on the
                 // setOfMappings + gold if needed form goldenMappings
-				/*
-				 * correct one
-				 *
-				 * //50*6==300 minIndex=(unitsPerJob*job)-unitsPerJob; maxIndex
-				 * = (unitsPerJob*job)-1; //if we are in the last job to build,
-				 * then the maxIndex is the last possible index, which might not
-				 * be (50*job)-1 if (job==numberOfJobs) { maxIndex =
-				 * mappings.size()-1;
-				 * //adjustUnitsPerAssignmentAndCalculateMinimumGold
-				 * (mappings.size()); }
-				 */
 
-                // 2 * unitsPerJob < interlinks
+
                 if ((job % 2 == 1 && maxIndex + unitsPerJob < interlinks
 
                         .size())
@@ -215,33 +176,7 @@ public class CwdfInterlinkingMicrotaskGeneratorImpl implements InterlinkingMicro
                     }
                 }
 
-				/*
-				 * int job = 1; int maxIndex ; while (job <=numberOfJobs) {
-				 * //create jobs with related units inside based on the
-				 * setOfMappings + gold if needed form goldenMappings
-				 * //50*6==300 (unitsPerJob)
-				 *
-				 * //in the beginning unitsPerAssignment is the one by default
-				 * this
-				 * .realUnitsPerAssignment=ConfigurationManager.getInstance()
-				 * .getUnitsPerAssignment();
-				 *
-				 *
-				 * //if we are in the last job to build, then the maxIndex is
-				 * the last possible index, which might not be (50*job)-1
-				 *
-				 * adjustUnitsPerAssignmentAndCalculateMinimumGold(mappings.size(
-				 * )); int unitsPerJob =
-				 * (int)(ConfigurationManager.getInstance()
-				 * .getBatch()*(this.realUnitsPerAssignment-1));
-				 *
-				 * if (job==numberOfJobs) { maxIndex = mappings.size()-1;
-				 *
-				 *
-				 * } else { maxIndex = (unitsPerJob*job)-1; }
-				 *
-				 * //calcular num minimum gold
-				 */
+
 
                 //setOfUnits = new HashSet<UnitDataEntryImpl>();
                 goldenUnits = new HashSet<UnitDataEntryImpl>();
@@ -251,37 +186,10 @@ public class CwdfInterlinkingMicrotaskGeneratorImpl implements InterlinkingMicro
                 // we create and add the golden to the set of units to be
                 // included in the job. By default validation HIT without
                 // context
-				/*
-				 * for (Mapping gMap: goldenMappings) {
-				 *
-				 * //create the appropriate units
-				 * MappingValidationUnitDataEntryImpl gMapVal = new
-				 * MappingValidationUnitDataEntryImpl
-				 * (gMap.getElementA().getURI(), gMap.getElementB().getURI(),
-				 * gMap.getRelation(),this.candidateInterlinking.getOntology1(),
-				 * this.candidateInterlinking.getOntology2()); // here we don't
-				 * need to loadInfo - not even the label or comments which is
-				 * what we show on HITs without context, because I invented the
-				 * mapping element of the golden HITS - gMapVal.loadInfo();
-				 * gMapVal.setDifficulty(1); setOfUnits.add(gMapVal); }
-				 */
 
-				/*
-				 * The real number of units in the job is calculated by
-				 * counting:
-				 *
-				 * lastIndex - firstIndex +1
-				 *
-				 * in the code lastIndex-->maxIndex
-				 * firstIndex-->(unitsPerJob*job)-unitsPerJob
-				 *
-				 * For example: 510 units ==> job1: 300 units (0..299) ; job2:
-				 * 210 units (300 .. 509) this.numberOfRealUnitsOfJob: 299 -
-				 * ((300*1)-300)+1 509 - ((300*2)-300) +1 299-0+1 509 - 300 +1
-				 * 300 210
-				 */
-                // this.numberOfRealUnitsOfJob = maxIndex
-                // -((unitsPerJob*job)-unitsPerJob) +1;
+
+
+
                 this.numberOfRealUnitsOfJob = maxIndex - minIndex + 1;
                 realUnitsPerAssignment = ConfigurationManager.getInstance()
                         .getUnitsPerAssignment();
@@ -317,19 +225,16 @@ public class CwdfInterlinkingMicrotaskGeneratorImpl implements InterlinkingMicro
                             * ConfigurationManager.getInstance()
                             .getGoldPerAssignment();
 
-                    // extract in method
                 }
 
                 if (context
                         && (this.mappingGoal
                         .equals(TypeOfMappingGoal.VALIDATION))) {
 
-                    // goldenUnits = addGoldStandardMappings(1,
-                    // numberOfRealUnitsOfJob, job);
 
 
-                    //lastAvailableIndex = lastAvailableIndex+ (this.numberOfMinimumGold*2);
-                    //lastAvailableIndex = lastAvailableIndex+ this.numberOfMinimumGold;
+
+
 
                     listOfUnits = new ArrayList<UnitDataEntryImpl>();
                     goldenUnits = new HashSet<UnitDataEntryImpl>();
@@ -362,9 +267,7 @@ public class CwdfInterlinkingMicrotaskGeneratorImpl implements InterlinkingMicro
                         // goldenUnits = addGoldStandardMappings(2,
                         // numberOfRealUnitsOfJob, job);
 
-						/*lastAvailableIndex = lastAvailableIndex
-								+ (this.numberOfMinimumGold*2);*/
-                        //lastAvailableIndex = lastAvailableIndex+ this.numberOfMinimumGold;
+
                         for (int i = minIndex; i <= maxIndex; i++) {
 
                             Interlink interlink = interlinks.get(i);
@@ -389,14 +292,7 @@ public class CwdfInterlinkingMicrotaskGeneratorImpl implements InterlinkingMicro
                                 && ((this.mappingGoal
                                 .equals(TypeOfMappingGoal.IDENTIFICATIONA)) || (this.mappingGoal
                                 .equals(TypeOfMappingGoal.IDENTIFICATIONB)))) {
-                            // add two golden units
 
-                            // numberOfRealUnitsOfJob = 25;
-                            // goldenUnits = addGoldStandardMappings(3,
-                            // numberOfRealUnitsOfJob, job);
-
-						/*lastAvailableIndex = lastAvailableIndex+ (this.numberOfMinimumGold*2); */
-                            //	lastAvailableIndex = lastAvailableIndex+ this.numberOfMinimumGold;
 
                             for (int i = minIndex; i <= maxIndex; i++) {
 
@@ -417,28 +313,7 @@ public class CwdfInterlinkingMicrotaskGeneratorImpl implements InterlinkingMicro
 
                             }
 
-							/*
-							 * //only for the small pilot------------ int
-							 * first=0; int last=0; if (job==1) { first=0;
-							 * last=24; } else { if (job==2) { first=25;
-							 * last=49; } } for (int i=first; i<=last; i++) {
-							 *
-							 * Mapping mapping = mappings.get(i); //create the
-							 * appropriate units
-							 * MappingIdentificationWithFullContextUnitDataEntryImpl
-							 * mapIdCont = new
-							 * MappingIdentificationWithFullContextUnitDataEntryImpl
-							 * (mapping.getElementA().getURI(),
-							 * mapping.getElementB().getURI(),
-							 * this.candidateInterlinking.getOntology1(),
-							 * this.candidateInterlinking.getOntology2());
-							 * mapIdCont.setDifficulty(2); mapIdCont.loadInfo();
-							 * setOfUnits.add(mapIdCont);
-							 *
-							 *
-							 *
-							 * } //end of small pilot-------------------
-							 */
+
                         } else {
                             if (!context
                                     && ((this.mappingGoal
@@ -448,9 +323,7 @@ public class CwdfInterlinkingMicrotaskGeneratorImpl implements InterlinkingMicro
                                 // goldenUnits = addGoldStandardMappings(4,
                                 // numberOfRealUnitsOfJob, job);
 
-								/*lastAvailableIndex = lastAvailableIndex
-										+ (this.numberOfMinimumGold*2);*/
-                                //	lastAvailableIndex = lastAvailableIndex+ this.numberOfMinimumGold;
+
 
                                 for (int i = minIndex; i <= maxIndex; i++) {
 
@@ -504,11 +377,7 @@ public class CwdfInterlinkingMicrotaskGeneratorImpl implements InterlinkingMicro
                 ConfigurationManager.getInstance().setMaxJudgmentsPerWorker(
                         this.numberOfMinimumGold * realUnitsPerAssignment);
 
-                // ConfigurationManager.getInstance().setMaxJudgmentsPerWorker(setOfUnits.size()+goldenUnits.size());
 
-                // System.out.println("NUMBEROFJOBS: "+this.numberOfJobs+
-                // "REALUNITSPERASSIGNMENT: "+this.realUnitsPerAssignment+
-                // "PAGES/HITS: "+this.numberOfPagesInTheJob+"MINIMUM GOLD: "+this.numberOfMinimumGold);
 
 				/*
 				 * The jobs will be created with not turned / turned UI (CML)

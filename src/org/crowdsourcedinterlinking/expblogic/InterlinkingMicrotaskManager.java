@@ -16,17 +16,20 @@ import java.util.UUID;
  */
 public class InterlinkingMicrotaskManager {
 
+    //Links generator (which can be based on Cartesian Product / DirectInput / 5050)
     private LinksGenerator linksGenerator;
 
-
+    //Generator of interlinking microtasks (their UI and data content)
     private InterlinkingMicrotaskGenerator microtaskGenerator;
+    // Microtask publisher (e.g. with the CrowdFlower service)
     private MicrotaskPublisher microtaskPublisher;
 
+    // Set of links included in the microtasks
     private Interlinking candidates;
-
+    // Set of microtasks generated
     private Set<Microtask> setOfMicrotasks;
 
-    // when creating the specific PairsGenerato, first create alignment to
+    // when creating the specific PairsGenerator, first create alignment to
     // insert the two ontologies and then set the pairs inside the
 
     public InterlinkingMicrotaskManager(LinksGenerator linksGen,

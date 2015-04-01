@@ -13,6 +13,7 @@ import java.util.Set;
 
 /**
  * @author csarasua
+ * Class for generating all the microtasks of type interlinking relevance assessment.
  */
 public class CwdfRelInterlinkingMicrotaskGeneratorImpl implements RelInterlinkingChoicesMicrotaskGenerator {
 
@@ -23,12 +24,18 @@ public class CwdfRelInterlinkingMicrotaskGeneratorImpl implements RelInterlinkin
         //no config
     }
 
+    /**
+     *
+     * @param interlinkingChoices all the interlinking possibilities to assess in these microtasks
+     * @return set of generated relevance assessment microtasks
+     */
     public Set<Microtask> createMicrotasks(InterlinkingChoices interlinkingChoices) {
         Set<Microtask> result = new HashSet<Microtask>();
 
         try {
 
 
+            // the microtasks are created with survey-style. Therefore, in contrast to other microtasks (e.g. interlinking valkidation) no units need to be uploaded as units.
             RelInterlinkingChoicesJobMicrotaskImpl job = new RelInterlinkingChoicesJobMicrotaskImpl();
 
             job.setTitle("Assess the relevance of this information within a particular context");
@@ -46,28 +53,7 @@ public class CwdfRelInterlinkingMicrotaskGeneratorImpl implements RelInterlinkin
             job.createUI(interlinkingChoices);
             result.add(job);
 
-            /*
-            validationJob
-							.setInstructions(instructions);
-					validationJob.setLanguage("en");
-					// it is a 2 possible answers microtask
-					validationJob.setJudgmentsPerUnit(ConfigurationManager
-							.getInstance().getjudgmentsPerUnitTwoOptions());
-					validationJob.setMaxJudgmentsPerWorker(ConfigurationManager
-							.getInstance().getMaxJudgmentsPerWorker());
-					validationJob.setPagesPerAssignment(ConfigurationManager
-							.getInstance().getPagerPerAssignment());
-					// validationJob.setUnitsPerAssignment(ConfigurationManager.getInstance().getUnitsPerAssignment());
-					validationJob.setUnitsPerAssignment(realUnitsPerAssignment);
-					validationJob.setGoldPerAssignment(ConfigurationManager
-							.getInstance().getGoldPerAssignment());
-					validationJob.setListOfUnits(listOfUnits);
-					validationJob.setGoldenUnits(goldenUnits);
-					validationJob.setGoldenUnitsSourcePos(goldenUnitsPos);
-					validationJob.setGoldenUnitsSourceNeg(goldenUnitsNeg);
 
-					validationJob.createUI();
-             */
 
         } catch (Exception e) {
             e.printStackTrace();
