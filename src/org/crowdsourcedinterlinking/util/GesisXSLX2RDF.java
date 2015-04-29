@@ -89,21 +89,7 @@ public class GesisXSLX2RDF {
 		
 			
 			
-			/*Property creatorProperty = model.getProperty(Constants.NS_DC_TERMS + "creator");
-			Property dateProperty = model.getProperty(Constants.NS_DC_TERMS + "date");
-			Property titleProperty = model.getProperty(Constants.NS_DC_TERMS + "title");
-			Property abstractProperty = model.getProperty(Constants.NS_DC_TERMS + "abstract");
 			
-			Resource discoStudy = model.getResource(this.NS_DDI + "Study");
-			
-			
-			// I can also load FOAF + datacite + NEPOMUK, but it is not really interesting - would be merged in the ontology
-			Resource foafDocument = model.createResource(Constants.NS_FOAF + "Document");
-			Resource foafPerson = model.createResource(Constants.NS_FOAF + "Person");
-			Property foafNameProperty = model.createProperty(Constants.NS_FOAF + "name");
-			Property doiProperty = model.createProperty(this.NS_DATACITE + "doi");
-			Property affiliation = model.createProperty("http://www.semanticdesktop.org/ontologies/nco/#hasAffiliation");
-			*/
             Property creatorPropertyP = modelPublications.createProperty(Constants.NS_DC_TERMS + "creator");
             Property creatorPropertyS = modelStudies.createProperty(Constants.NS_DC_TERMS + "creator");
 
@@ -119,7 +105,7 @@ public class GesisXSLX2RDF {
             Resource discoStudy = model.getResource(this.NS_DDI + "Study");
 
 
-            // I can also load FOAF + datacite + NEPOMUK, but it is not really interesting - would be merged in the ontology
+           
             Resource foafDocumentP = modelPublications.createResource(Constants.NS_FOAF + "Document");
 //			Resource foafDocumentS = modelStudies.createResource(Constants.NS_FOAF + "Document");
 
@@ -152,16 +138,14 @@ public class GesisXSLX2RDF {
                     correctContent = check3(row);
                 }
 
-                // [GOLD] else if( correctContent && ( (rowCount>2 && rowCount<25)))
-                // [DATA]  else if( correctContent && ( (rowCount>2 && rowCount<103)))
+                
                 else if (correctContent && ((rowCount > 2 && rowCount < 103)))
-                // else if( correctContent && ( (rowCount>2)))
+               
 
                 {
 
 
-                    //I add URIs not to leave it empty - but they are not real and actually, I don�t really access them
-
+                    
                     Resource publicationResource = modelPublications.createResource(URIref.encode("http://www.gesis.org/data/publication" + (rowCount - 2)));    //EMPTY URI!
                     publicationResource.addProperty(RDF.type, foafDocumentP);
 
@@ -187,12 +171,10 @@ public class GesisXSLX2RDF {
                             Double doubleValue = new Double(cell.getNumericCellValue());
                             int integerValue = doubleValue.intValue();
                             cellValue = Integer.toString(integerValue);
-                            // cellValue=Double.toString(cell.getNumericCellValue());
 
                         } else if (cell.getCellType() == HSSFCell.CELL_TYPE_STRING) {
                             cellValue = cell.getStringCellValue();
-			    			  /* HSSFDataFormatter formatter = new HSSFDataFormatter(); 
-			    			   formatter.formatCellValue(cell);*/
+			    			 
                         }
 
                         if ((!cellValue.equals(" ")) && (!cellValue.equals("BB")) && (!cellValue.equals("[]"))) {
@@ -323,11 +305,7 @@ public class GesisXSLX2RDF {
                 rowCount = rowCount + 1;
             }
 			 
-			 /*
-			 OutputStream out = new FileOutputStream(this.rdfFilePubs);
-			 
-			 
-			 RDFDataMgr.write(out, modelPublications, Lang.RDFXML) ;*/
+			
 
 
             //Serialise the file (ask about the format)
@@ -341,36 +319,7 @@ public class GesisXSLX2RDF {
             modelLinks.write(outLinks, "N-TRIPLE");
 
 			 
-			/* OutputStream outPubs = new FileOutputStream(this.rdfFilePubs);
-
-				PrintWriter writer1 = new PrintWriter(new OutputStreamWriter(outPubs));
-				writer1.println("<?xml version='1.0' encoding='utf-8' standalone='no'?>");
-				writer1.flush();
-
-				modelPublications.write(writer1, "RDF/XML");
-
-				writer1.close();
-				
-				OutputStream outStuds = new FileOutputStream(this.rdfFileStuds);
-
-				
-					PrintWriter writer2 = new PrintWriter(new OutputStreamWriter(outStuds));
-					writer2.println("<?xml version='1.0' encoding='utf-8' standalone='no'?>");
-					writer2.flush();
-
-					modelStudies.write(writer2, "RDF/XML");
-
-					writer2.close();
-					
-					OutputStream outLinks = new FileOutputStream(this.rdfLinks);
-
-					PrintWriter writer3 = new PrintWriter(new OutputStreamWriter(outLinks));
-					
-					writer3.flush();
-
-					modelLinks.write(writer3, "N-TRIPLE");
-
-					writer3.close();*/
+			
 
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
@@ -467,11 +416,11 @@ public class GesisXSLX2RDF {
                     correctContent = check1(row);
                 }
 
-                // else if( correctContent && ( (rowCount>2 && rowCount<70)||(rowCount > 71 && rowCount<141)))
+               
                 else if (correctContent && ((rowCount > 1 && rowCount < 454))) {
 
 
-                    //I add URIs not to leave it empty - but they are not real and actually, I don�t really access them
+                    
 
                     Resource publicationResource = modelPublications.createResource(URIref.encode("http://www.gesis.org/data/publication" + (rowCount - 1)));    //EMPTY URI!
                     publicationResource.addProperty(RDF.type, foafDocumentP);
@@ -566,11 +515,7 @@ public class GesisXSLX2RDF {
 
                             }
 			            	
-			            	/*else if (columnCount==24) //deleted because it is too long!
-			            	{
-			            		studyResource.addProperty(dctermsDescriptionS, cellValue);
-			            	}
-			            	*/
+			            	
                         }
 
                         columnCount = columnCount + 1;
@@ -585,11 +530,7 @@ public class GesisXSLX2RDF {
                 rowCount = rowCount + 1;
             }
 			 
-			 /*
-			 OutputStream out = new FileOutputStream(this.rdfFilePubs);
 			 
-			 
-			 RDFDataMgr.write(out, modelPublications, Lang.RDFXML) ;*/
 
 
             //Serialise the file (ask about the format)
