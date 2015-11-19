@@ -9,11 +9,6 @@ Example microtask for interlinking validation and enhancement:
 https://tasks.crowdflower.com/assignments/3a216788-2ad0-420c-a78b-b4cb7ce648d0
 
 
-# License
-
-This work is under a CC BY-SA (Creative Commons Attribution ShareAlike) license.
-See also: [explanation](http://creativecommons.org/licenses/by-sa/4.0/)
-See also: [legal code](http://creativecommons.org/licenses/by-sa/4.0/legalcode)
 
 # Contact details
 
