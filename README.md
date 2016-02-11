@@ -12,7 +12,7 @@ https://tasks.crowdflower.com/assignments/3a216788-2ad0-420c-a78b-b4cb7ce648d0
 
 Copyright Cristina Sarasua. 
 
-Licensed under the Apache License, Version 2.0 (the "License");
+The code developed within CROWDKI is licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
@@ -23,6 +23,8 @@ distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
+
+However, the software executes HTTP requests to the CrowdFlower API (https://success.crowdflower.com/hc/en-us/articles/202703445-Integrating-with-the-API), under a research license. Further crowdsourcing platforms could be integrated creating additional implementations of the MicrotaskPublisher and InterlinkResultReader interfaces. 
 
 # Contact details
 
